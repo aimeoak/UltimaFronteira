@@ -1,10 +1,22 @@
+import java.util.Random;
 public class Rastreador extends Personagem {
-    public Rastreador(String nome, int vida, int fome, int sede, int energia, int sanidade) {
-        super(nome, vida, fome, sede, energia, sanidade);
+    Random random = new Random();
+    public Rastreador(String nome) {
+        super(nome, 90, 70, 70, 100, 80);
 
     }
-    public void encontrar(){
-        System.out.println("O rastreador " + this.getNome() + " encontrou comida e água.");
-    }
+    public void encontrarRecursos(Ambiente ambiente){
+        String [] recursos = ambiente.getRecursos();
+        if(recursos.length == 0){
+            System.out.println(this.getNome() + " procurou, mas não encontrou nenhum recurso.");
+            return;
+        }
+        int index = random.nextInt(recursos.length);
+        String recursoEncontrado = recursos[index];
+        System.out.println(this.getNome() + " encontrou o recurso " + recursoEncontrado);
+
+        }
+
+
 
 }
