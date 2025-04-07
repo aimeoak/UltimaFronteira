@@ -38,6 +38,11 @@ public abstract class Ambientes{
   }
 
   public abstract void explorar (); 
+
+  @Override
+  public String toString(){
+    return "NOME: " + this.nome + "\nDESCRIÇÃO: " + this.descricao + "\nDIFICULDADE: " +this.dificuldadeExplo + "\nRECURSOS: " + Arrays.toString(this.recursos) + "\nPROBABILIDADE DE EVENTOS: " + this.probEventos + "\nCONDIÇÃO DO CLIMA: " + this.condClima;
+  }
   
   public void gerarEvento(){
     String [] eventos = {"tempestade", "Incêndio", "neve"}; 
