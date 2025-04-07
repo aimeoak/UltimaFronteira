@@ -33,3 +33,4 @@ public class Item {
         return "Nome: " + this.nome+ "\nPeso: " + this.peso + "\nDurabilidade: " + this.durabilidade;
 
     }
+}
