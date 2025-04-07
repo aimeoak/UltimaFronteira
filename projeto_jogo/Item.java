@@ -30,6 +30,6 @@ public class Item {
     }
     @Override
     public String toString(){ 
-        return "Nome: " + this.nome\n + "Peso: " + this.peso\n + "Durabilidade: " + this.durabilidade\n
+        return "Nome: " + this.nome+ "\nPeso: " + this.peso + "\nDurabilidade: " + this.durabilidade;
 
     }
