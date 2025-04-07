@@ -1,5 +1,5 @@
 import java.util.Random; 
-public abstract class Ambiente{
+public abstract class Ambientes{
   private String nome; //BIOMA
   private String descricao;
   private int dificuldadeExplo; 
