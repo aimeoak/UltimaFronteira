@@ -1,9 +1,9 @@
-public class Alimentos extends Item{
+public class Alimento extends Item{
     private int valorNutricional; 
     private String tipoAlimento; //nossos tipos de alimentos serão carne, frutas, legumes, peixe, cogumelos (Carne = intoxicação alimentar, Cougumelo = restaura vida)
     private int validade; 
 
-    public Alimentos (String nome, double peso, int durabilidade, int valorNutricional, String tipoAliment, int validade){
+    public Alimento (String nome, double peso, int durabilidade, int valorNutricional, String tipoAliment, int validade){
         super(nome, peso, durabilidade);
         this.valorNutricional = valorNutricional;
         this.tipoAlimento = tipoAliment.toLowerCase(); 
