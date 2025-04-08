@@ -12,23 +12,25 @@ public class Alimento extends Item{
     public void consumir(Personagem personagem){
         if (tipoAlimento.equals("carne")){ 
             System.out.println("Intoxicação alimentar!!");
-            personagem.setVida(personagem.getVida()-1);
-            personagem.setFome(personagem.getFome()+ valorNutricional);
+            personagem.reduzirVida(10);
+            personagem.aumentarFome(valorNutricional);
+            personagem.aumentarEnergia(valorNutricional);
 
 
 
         }
         else if(tipoAlimento.equals("cogumelo")){
             System.out.println("Vida extra");
-            personagem.setVida(personagem.getVida()+ 1);
-            personagem.setFome(personagem.getFome()+ valorNutricional);
+            personagem.aumentarVida(10);
+            personagem.aumentarFome(valorNutricional);
+            personagem.aumentarEnergia(valorNutricional);
 
 
 
         }
         else{
-            personagem.setFome(personagem.getFome()+ valorNutricional);
-            //deveria adicionar energia também??
+            personagem.aumentarFome(valorNutricional);
+            personagem.aumentarEnergia(valorNutricional);
         }
          //Os itens com uma durabilidade == 0 precisam sumir 
         setDurabilidade(getDurabilidade() - 1);
