@@ -1,4 +1,4 @@
-public class Floresta extends Ambiente{
+public class Floresta extends Ambiente {
   private static final String vegetacao = "Na floresta a vegetação é densa, o que reduz a sua visibilidade e dificulta sua movimentação.";
 
   private static final String fauna = "Fauna abundante -> Probabilidade de caça, mas também de ataques de animais selvagens.";

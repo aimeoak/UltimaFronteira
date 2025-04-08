@@ -28,6 +28,11 @@ public class Item {
     public int getDurabilidade(){
         return this.durabilidade;
     }
+
+    public void setDurabilidade(int durabilidade) {
+        this.durabilidade = durabilidade;
+    }
+
     @Override
     public String toString(){ 
         return "Nome: " + this.nome+ "\nPeso: " + this.peso + "\nDurabilidade: " + this.durabilidade;

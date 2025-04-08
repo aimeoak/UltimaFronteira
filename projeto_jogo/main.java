@@ -1,23 +1,45 @@
+import java.util.Scanner;
 public class main {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("ÙLTIMA FRONTEIRA\n\nEstas são as informações do seu personagem: \n");
-        Personagem personagem = new Personagem("João", 100, 100, 100, 100, 100);
-        System.out.println(personagem);
+        Medico jogador = new Medico("João");
+        Alimento alimento = new Alimento("Carne", 2.0, 1, 10, "Carne", 3);
+        System.out.println(jogador);
 
         Floresta floresta = new Floresta(); 
         System.out.println("\nAMBIENTE: \n");
         System.out.print(floresta);
 
-        System.out.println("\n\n PRIMEIRO TURNO DO JOGO\n\n");
+        //simulação loop de turno
+        for(int turno = 1; turno <= 3; turno++ ){
+            System.out.println("\n\nTURNO: " + turno);
+            floresta.modificarClima();
+            System.out.println("O que você deseja fazer? (1) Comer (2) Explorar  (3) Curar");
+            int escolha = scanner.nextInt();
+                switch(escolha){
+                    case 1:
+                        alimento.consumir(jogador);
+                        System.out.println("\n\nINFORMAÇÕES DO PERSONAGEM APÓS O CONSUMO DO ALIMENTO\n");
+                        System.out.println(jogador);
+                        break;
+                    case 2:
+                        floresta.explorar();
+                        break;
+                    case 3:
+                        jogador.curar();
+                        System.out.println(jogador);
+                        break;
+                    default:
+                        System.out.println("Opção inválida!");
+                        break;
+                }
 
-        floresta.modificarClima();
 
-        Alimento alimento = new Alimento("Carne", 2.0, 1, 10, "Carne", 3);
-        alimento.consumir(personagem); 
+        }
 
-        System.out.println("\n\nINFORMAÇÕES DO PERSONAGEM APÓS O CONSUMO DO ALIMENTO\n");
 
-        System.out.println(personagem);
 
+        scanner.close();
     }
 }

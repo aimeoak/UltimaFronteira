@@ -1,5 +1,6 @@
-import java.util.Random; 
-public abstract class Ambientes{
+import java.util.Random;
+import java.util.Arrays;
+public abstract class Ambiente {
   private String nome; //BIOMA
   private String descricao;
   private int dificuldadeExplo; 
@@ -7,7 +8,7 @@ public abstract class Ambientes{
   private double probEventos; 
   private String condClima;
 
-  public Ambiente (String nome, String descricao, int dificuldadeExplo, String[] recursos, double probEventos, String condClima){
+  public Ambiente(String nome, String descricao, int dificuldadeExplo, String[] recursos, double probEventos, String condClima){
     this.nome = nome; 
     this.descricao = descricao; 
     this.dificuldadeExplo = dificuldadeExplo;
