@@ -11,11 +11,17 @@ public class main {
         System.out.println("\nAMBIENTE: \n");
         System.out.print(floresta);
 
-        //simulação loop de turno
-        for(int turno = 1; turno <= 3; turno++ ){
-            System.out.println("\n\nTURNO: " + turno);
+        int turno = 1;
+        while (true){
+            System.out.println("\n\n===TURNO: " + turno + "===" );
+            //desgaste natural de cada turno e atualização de clima
             floresta.modificarClima();
-            System.out.println("O que você deseja fazer? (1) Comer (2) Explorar  (3) Curar");
+            jogador.reduzirFome(5);
+            jogador.reduzirSede(5);
+            jogador.aumentarEnergia(3);
+            jogador.aumentarSanidade(2);
+
+            System.out.println("O que você deseja fazer? (1) Comer (2) Explorar  (3) Curar (4) Status");
             int escolha = scanner.nextInt();
                 switch(escolha){
                     case 1:
@@ -30,15 +36,22 @@ public class main {
                         jogador.curar();
                         System.out.println(jogador);
                         break;
+                    case 4:
+                        System.out.println(jogador);
+                        break;
                     default:
                         System.out.println("Opção inválida!");
                         break;
                 }
+                if(jogador.getVida() <= 0|| jogador.getFome() <=0 || jogador.getSede() <=0 || jogador.getEnergia() <=0|| jogador.getSanidade() <=0){
+                    System.out.println("\nVocê não resistiu... Fim de jogo.");
+                    System.out.println("Você sobreviveu durante " + turno + " dias.");
+                    break;
+                }
+                turno++;
 
 
         }
-
-
 
         scanner.close();
     }
