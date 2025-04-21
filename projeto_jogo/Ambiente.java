@@ -45,17 +45,7 @@ public abstract class Ambiente {
     return "NOME: " + this.nome + "\nDESCRIÇÃO: " + this.descricao + "\nDIFICULDADE: " +this.dificuldadeExplo + "\nRECURSOS: " + Arrays.toString(this.recursos) + "\nPROBABILIDADE DE EVENTOS: " + this.probEventos + "\nCONDIÇÃO DO CLIMA: " + this.condClima;
   }
   
-  public void gerarEvento(){
-    String [] eventos = {"tempestade", "Incêndio", "neve"}; 
-    Random rand = new Random(); 
-    if (rand.nextDouble() < probEventos){
-      int index = rand.nextInt(eventos.length);
-      System.out.println("Um evento ocorreu " + eventos[index]);
-    }
-    else{
-      System.out.println("Não houve evento");
-    }
-  }
+  public abstract void gerarEvento();
   
   public void modificarClima(){
     String [] climas = {"Ensolarado", "Nublado", "Chuvoso"};
