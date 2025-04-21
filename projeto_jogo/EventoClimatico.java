@@ -3,8 +3,8 @@ public class EventoClimatico extends Evento {
     private int duracao;
     //adicionar atributo efeito no ambiente
 
-    public EventoClimatico(String nome, String descricao, double probabilidadeOcorrencia, int impacto, String tipoClima, int duracao) {
-        super(nome, descricao, probabilidadeOcorrencia, impacto);
+    public EventoClimatico(String nome, String descricao, double probabilidadeOcorrencia, int impacto,String condicaoAtivacao ,String tipoClima, int duracao) {
+        super(nome, descricao, probabilidadeOcorrencia, impacto, condicaoAtivacao);
         this.tipoClima = tipoClima;
         this.duracao = duracao;
     }
@@ -31,20 +31,22 @@ public class EventoClimatico extends Evento {
         }
 
         }
+    @Override
+    public String getDescricao() {
+        return gerarDescricao();
+    }
 
-        @Override
-        public String getDescricao() {
-            switch (tipoClima.toLowerCase()) {
-                case "neve":
-                    return "Uma nevasca repentina reduz a visibilidade e cobre o chão com neve, dificultando a movimentação. As temperaturas caem rapidamente, aumentando o risco de hipotermia para aqueles expostos. É urgente buscar abrigo para preservar a energia e a saúde.";
-                case "tempestade":
-                    return "A chuva forte transforma o ambiente em um local lamacento e escorregadio. Encontrar abrigo se torna essencial para evitar penalidades em energia e sanidade.";
-                case "incendio":
-                    return "O calor extremo eleva rapidamente as temperaturas, facilitando a desidratação. O personagem deve consumir mais água para evitar fadiga e alucinações. A busca por sombra e recursos se torna vital para a sobrevivência.";
-                default:
-                    return "O clima está agradavel";
-            }
-
+    private String gerarDescricao() {
+        switch (tipoClima.toLowerCase()) {
+            case "neve":
+                return "Uma nevasca repentina reduz a visibilidade e cobre o chão com neve, dificultando a movimentação. As temperaturas caem rapidamente, aumentando o risco de hipotermia para aqueles expostos. É urgente buscar abrigo para preservar a energia e a saúde.";
+            case "tempestade":
+                return "A chuva forte transforma o ambiente em um local lamacento e escorregadio. Encontrar abrigo se torna essencial para evitar penalidades em energia e sanidade.";
+            case "incendio":
+                return "O calor extremo eleva rapidamente as temperaturas, facilitando a desidratação. O personagem deve consumir mais água para evitar fadiga e alucinações. A busca por sombra e recursos se torna vital para a sobrevivência.";
+            default:
+                return "O clima está agradável, sem alterações significativas.";
         }
+    }
 
     }

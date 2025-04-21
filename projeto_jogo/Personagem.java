@@ -5,6 +5,9 @@ public class Personagem {
     private int sede;
     private int energia;
     private int sanidade;
+    private boolean envenenado; //veneno, fratura, infeccao...
+    private int tempoEnvenenamento;
+    private Inventario inventario;
 
     public Personagem(String nome, int vida, int fome, int sede, int energia, int sanidade){
         this.nome = nome;
@@ -13,43 +16,52 @@ public class Personagem {
         this.sede = sede;
         this.energia = energia;
         this.sanidade = sanidade;
+        this.envenenado = false;
+        this.tempoEnvenenamento =0;
+        this.inventario = new Inventario(10);
     }
 
     String getNome(){
         return this.nome;
     }
 
-    int getVida(){
+    public int getVida(){
         return this.vida;
     }
-    int getFome(){
+    public int getFome(){
         return this.fome;
     }
-    int getSede(){
+    public int getSede(){
         return this.sede;
     }
-    int getEnergia(){
+    public int getEnergia(){
         return this.energia;
     }
-    int getSanidade(){
+    public int getSanidade(){
         return this.sanidade;
     }
+    public int getTempoEnvenenamento(){return this.tempoEnvenenamento;}
+    public Inventario getInventario(){return inventario;}
 
-    void setVida(int vida){
+
+    public void setVida(int vida){
         this.vida = vida;
     }
-    void setFome(int fome){
+    public void setFome(int fome){
         this.fome = fome;
     }
-    void setSede(int sede){
+    public void setSede(int sede){
         this.sede = sede;
     }
-    void setEnergia(int energia){
+    public void setEnergia(int energia){
         this.energia = energia;
     }
-    void setSanidade(int sanidade){
+    public void setSanidade(int sanidade){
         this.sanidade = sanidade;
     }
+    public void setEnvenenado(boolean envenenado){this.envenenado = envenenado;}
+    public void setTempoInfluenciaNegativa(){this.tempoEnvenenamento = tempoEnvenenamento;}
+    public void setInventario(){this.inventario=inventario;}
 
     //Metodos redução
     public void reduzirVida(int quantidade){
@@ -133,7 +145,26 @@ public class Personagem {
             }
         }
     }
+    //Métodos de veneno
+    public void envenenar() {
+        this.envenenado = true;
+        this.tempoEnvenenamento = 5;  // Define que o veneno vai durar 5 turnos (ajuste conforme necessário)
+    }
 
+    public void curarEnvenenamento() {
+        this.envenenado = false;
+        this.tempoEnvenenamento = 0;
+    }
+
+    // Método para aplicar o efeito do veneno a cada turno
+    public void aplicarEfeitoVeneno() {
+        if (envenenado && tempoEnvenenamento > 0) {
+            reduzirVida(2);  // O jogador perde 2 de vida a cada turno (ajuste conforme necessário)
+            tempoEnvenenamento--;
+        } else {
+            envenenado = false;  // Se o veneno acabou, o jogador já não está mais envenenado
+        }
+    }
 
     @Override
     public String toString(){
