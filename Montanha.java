@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.List;
 
 public class Montanha extends Ambiente {
     private static final String vegetacao = "Na montanha a vegetação é escassa, o que dificulta a busca por recursos."; 
@@ -11,29 +12,26 @@ public class Montanha extends Ambiente {
 
     @Override 
     public void gerarEvento(Personagem personagem) {
-        String[] eventos = { "Nevasca repentina", "Deslizamento de pedras", "Descoberta de uma caverna segura"};
+        List<Evento> eventosDisponiveis = getEventos();
         Random rand = new Random();
-        if (rand.nextDouble() < getProbEventos()) {
-            int index = rand.nextInt(eventos.length);
-            System.out.println("Um evento ocorreu: " + eventos[index]);
-            if (eventos[index].equals("Nevasca repentina")) {
-                System.out.println("A temperatura caiu drasticamente e você está congelando!");
-                personagem.reduzirVida(10);
+        
+        boolean eventoOcorrido = false;
+        
+        for (Evento evento : eventosDisponiveis) {
+            if (evento.getCondicaoAtivacao().equalsIgnoreCase(getNome())) {
+                if (rand.nextDouble() < evento.getProbabilidadeOcorrencia()) {
+                System.out.println("Evento ativado: " + evento.getNome());
+                System.out.println(evento.getDescricao());
+                evento.executar(personagem, this);
+                eventoOcorrido = true;
+                }
             }
-            if (eventos[index].equals("Deslizamento de pedras")) {
-                System.out.println("O deslizamento de pedras causou diversos ferimentos em você!");
-                personagem.reduzirVida(20); 
+            else{
+                System.out.println("Não ocorreu nenhum evento");
             }
-            if (eventos[index].equals("Descoberta de uma caverna segura")) {
-                System.out.println("Você encontrou uma caverna segura para se abrigar!"); 
-                personagem.aumentarVida(10);
-                personagem.aumentarEnergia(10);
-            }
-        } else {
-            System.out.println("Não houve evento");
         }
-    }
-
+     }
+    
     @Override
     public void explorar() {
         String[] recursos = getRecursos();
