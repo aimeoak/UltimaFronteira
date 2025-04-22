@@ -1,3 +1,5 @@
+import java.util.Random;
+import java.util.List;
 public class RuinasAbandonadas extends Ambiente{
   
     private String estruturas = "As estruturas estão bem instáveis e podem desmoronar a qualquer momento";
