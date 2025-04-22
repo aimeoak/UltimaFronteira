@@ -1,0 +1,72 @@
+public class Caverna extends Ambiente{
+  
+  private String luz = "Baixa iluminação: para uma exploração eficiente será necessária uma lanterna ou tocha"; 
+  private String criaturas = "Pode ter a presença de criaturas desconhecidas";
+  private String aguaGotas = "É um local com possivelmente a presença de água de gotejamento"; 
+
+    public Caverna() {
+        super("Caverna", luz + criaturas + aguaGotas, 1, new String[] {"Pedras preciosas e metais", "Pequenos lagos subterrâneos", "Ossos e vestígios de exploradores antigos"}, 0.2, "Frio");
+    }
+
+   @Override 
+      public void gerarEvento(Personagem personagem) {
+          List<Evento> eventosDisponiveis = getEventos();
+          Random rand = new Random();
+
+          boolean eventoOcorrido = false;
+
+          for (Evento evento : eventoDisponiveis) {
+              if (evento.getCondicaoAtivacao().equalsIgnoreCase(getNome())) {
+                
+                  if (rand.nextDouble() < evento.getProbabilidadeOcorrencia()) {
+                    
+                  System.out.println("Evento ativado: " + evento.getNome());
+                  System.out.println(evento.getDescricao());
+                  evento.executar(personagem, this);
+                  eventoOcorrido = true;
+                  }
+              }
+          }
+
+         @Override
+            public void explorar(Personagem personagem) {
+                String[] recursos = getRecursos();
+                Random rand = new Random();
+                int index = rand.nextInt(recursos.length);
+
+                String recursoEncontrado = recursos[index];
+
+                System.out.println("Você encontrou " + recursoEncontrado);
+
+                Item itemEncontrado = criarItem(recursoEncontrado);
+
+                if (itemEncontrado != null) {
+                    
+                    if (recursoEncontrado.equals("Pedras preciosas e metais") || recursoEncontrado.equals("Ossos e vestígios de exploradores antigos")) {
+                      
+                        if (personagem.getInventario().adicionarItem(itemEncontrado)) {
+                            System.out.println(itemEncontrado.getNome() + " foi adicionado ao inventário.");
+                        } 
+                          
+                        else {
+                            System.out.println("Não foi possível adicionar " + itemEncontrado.getNome() + " ao inventário.");
+                        }
+                    } 
+                      
+                    else {
+                        System.out.println("Este item não pode ser adicionado ao inventário.");
+                    }
+                }
+            }
+
+            private Item criarItem(String recurso) {
+                switch (recurso) {
+                    case "Pedras preciosas e metais":
+                        return new Materiais("Pedra preciosa", 1.0, 10); 
+                    case "Ossos e vestígios de exploradores antigos":
+                        return new Materiais("Ossos e vestígios de exploradores antigos", 5, 2); 
+                    default:
+                        return null; 
+                }
+            }
+        }

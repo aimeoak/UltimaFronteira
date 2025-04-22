@@ -1,0 +1,79 @@
+import java.util.Random;
+import java.util.List;
+
+public class RioLago extends Ambiente {
+    
+    private String agua = "Água em abundância, pode ser potável ou precisar de purificação";
+    private String pesca = "Peixes podem ser uma excelente fonte de alimento";
+    private String terreno = "O terreno é lamacento, o que pode dificultar a locomoção";
+
+    public RioLago() {
+        super("Rio/Lago", agua + pesca + terreno, 2, new String[] {"Peixes e algas comestíveis", "Água doce", "Materiais de construção"}, 0.4, "Ensolarado");
+    }
+
+    @Override 
+    public void gerarEvento(Personagem jogador) {
+        List<Evento> eventosDisponiveis = getEventos();
+        Random rand = new Random();
+
+        boolean eventoOcorrido = false;
+
+        for (Evento evento : eventosDisponiveis) {
+            if (evento.getCondicaoAtivacao().equalsIgnoreCase(getNome())) {
+                if (rand.nextDouble() < evento.getProbabilidadeOcorrencia()) {
+                    System.out.println("Evento ativado: " + evento.getNome());
+                    System.out.println(evento.getDescricao());
+                    evento.executar(jogador, this);
+                    eventoOcorrido = true;
+                }
+            }
+        }
+
+        if (!eventoOcorrido) {
+            System.out.println("Nenhum evento ocorreu.");
+        }
+    }
+
+    @Override
+    public void explorar(Personagem jogador) {
+        String[] recursos = getRecursos();
+        Random rand = new Random();
+        int index = rand.nextInt(recursos.length);
+
+        String recursoEncontrado = recursos[index];
+
+        System.out.println("Você encontrou " + recursoEncontrado);
+
+        Item itemEncontrado = criarItem(recursoEncontrado);
+
+        if (itemEncontrado != null) {
+            
+            if (recursoEncontrado.equals("Peixes e algas comestíveis") || recursoEncontrado.equals("Água doce") || recursoEncontrado.equals("Materiais de construção")) {
+                
+                if (jogador.getInventario().adicionarItem(itemEncontrado)) {
+                    System.out.println(itemEncontrado.getNome() + " foi adicionado ao inventário.");
+                }    
+                else {
+                    System.out.println("Não foi possível adicionar " + itemEncontrado.getNome() + " ao inventário.");
+                }
+            } 
+            
+            else {
+                System.out.println("Este item não pode ser adicionado ao inventário.");
+            }
+        }
+    }
+
+    private Item criarItem(String recurso) {
+        switch (recurso) {
+            case "Água doce":
+                return new Agua("Água doce", 1.0, 10);
+            case "Materiais de construção":
+                return new Materiais("Materiais de construção", 5, 2); 
+            case "Peixes e algas comestíveis":
+                return new Alimento("Peixes e algas comestíveis", 2, 3);
+            default:
+                return null; 
+        }
+    }
+}
