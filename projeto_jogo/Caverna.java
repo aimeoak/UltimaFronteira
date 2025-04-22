@@ -1,3 +1,5 @@
+import java.util.Random;
+import java.util.List;
 public class Caverna extends Ambiente{
   
   private String luz = "Baixa iluminação: para uma exploração eficiente será necessária uma lanterna ou tocha"; 
