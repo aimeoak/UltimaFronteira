@@ -52,7 +52,7 @@ public abstract class Ambiente {
     return Collections.unmodifiableList(eventos);
   }
 
-  public abstract void explorar (); 
+  public abstract void explorar (Peronagem jogador); 
 
   @Override
   public String toString(){
