@@ -1,5 +1,9 @@
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
 import java.util.Arrays;
+import java.util.Random;
+
 public abstract class Ambiente {
   private String nome; //BIOMA
   private String descricao;
@@ -7,6 +11,8 @@ public abstract class Ambiente {
   private String []  recursos; 
   private double probEventos; 
   private String condClima;
+
+  private List<Evento> eventos = new ArrayList<>(); //criar uma lista com os eventos
 
   public Ambiente(String nome, String descricao, int dificuldadeExplo, String[] recursos, double probEventos, String condClima){
     this.nome = nome; 
@@ -36,6 +42,14 @@ public abstract class Ambiente {
 
   public String getCondClima(){
     return condClima;
+  }
+
+  public void adicionarEvento(Evento evento){
+    this.eventos.add(evento);
+  }
+
+  public List<Evento> getEventos(){
+    return Collections.unmodifiableList(eventos);
   }
 
   public abstract void explorar (); 
