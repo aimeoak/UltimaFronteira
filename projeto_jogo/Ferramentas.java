@@ -24,29 +24,24 @@ public class Ferramentas extends Item{
      this.eficiencia = eficiencia;
    }
 
-  @Override
-  public void usar(){
-    System.out.println("Usando a ferramenta " + getNome() + " de tipo " + tipo + " com eficiência " + eficiencia);
+    @Override
+    public int usar() {
+        System.out.println("Usando a ferramenta " + getNome() + " de tipo " + tipo + " com eficiência " + eficiencia);
 
-    if (getNome().equals("Machado")){
-      System.out.println("Você cortou a madeira.");
-    }
+        if (getNome().equals("Machado")){
+            System.out.println("Você cortou a madeira.");
+        } else if (getNome().equals("Faca")){
+            System.out.println("Você cortou o alimento.");
+        } else if (getNome().equals("Isqueiro")){
+            System.out.println("Você acendeu o fogo.");
+        } else if (getNome().equals("Lanterna")){
+            System.out.println("Você iluminou o ambiente.");
+        } else {
+            System.out.println("Você não conseguiu fazer nada.");
+        }
 
-    if (getNome().equals("Faca")){
-      System.out.println("Você cortou o alimento.");
+        setDurabilidade(getDurabilidade() - 1);
+        return getDurabilidade();
     }
-    if (getNome().equals("Isqueiro")){
-      System.out.println("Você acendeu o fogo.");
-    }
-    if (getNome().equals("Lanterna")){
-      System.out.println("Você iluminou o ambiente.");
-    }
-    else{
-      System.out.println("Você não conseguiu fazer nada.");
-    }
-
-    setDurabilidade(getDurabilidade() - 1);
-
-  }
 
 }

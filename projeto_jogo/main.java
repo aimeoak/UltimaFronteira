@@ -97,7 +97,7 @@ public class main {
                         break;
 
                     case 2:
-                        floresta.explorar();
+                        floresta.explorar(jogador);
                         break;
                     case 3:
                         jogador.curar();

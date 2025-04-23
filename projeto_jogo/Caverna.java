@@ -2,9 +2,9 @@ import java.util.Random;
 import java.util.List;
 public class Caverna extends Ambiente{
   
-  private String luz = "Baixa iluminação: para uma exploração eficiente será necessária uma lanterna ou tocha"; 
-  private String criaturas = "Pode ter a presença de criaturas desconhecidas";
-  private String aguaGotas = "É um local com possivelmente a presença de água de gotejamento"; 
+  private static final String luz = "Baixa iluminação: para uma exploração eficiente será necessária uma lanterna ou tocha";
+  private static final String criaturas = "Pode ter a presença de criaturas desconhecidas";
+  private static final String aguaGotas = "É um local com possivelmente a presença de água de gotejamento";
 
     public Caverna() {
         super("Caverna", luz + criaturas + aguaGotas, 1, new String[] {"Pedras preciosas e metais", "Pequenos lagos subterrâneos", "Ossos e vestígios de exploradores antigos"}, 0.2, "Frio");
@@ -66,7 +66,7 @@ public class Caverna extends Ambiente{
                     case "Pedras preciosas e metais":
                         return new Materiais("Pedra preciosa", 1.0, 10); 
                     case "Ossos e vestígios de exploradores antigos":
-                        return new Materiais("Ossos e vestígios de exploradores antigos", 5, 2); 
+                        return new Materiais("Ossos e vestígios de exploradores antigos", 5, 2);
                     default:
                         return null; 
                 }

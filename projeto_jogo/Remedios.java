@@ -23,8 +23,8 @@ public class Remedios extends Item{
   }
 
   @Override
-  public void usar() {
-      System.out.println("Esse remédio precisa de um personagem para ser usado corretamente.");
+  public int usar() {
+      return super.usar();
   }
 
 

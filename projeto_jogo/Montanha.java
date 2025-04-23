@@ -10,30 +10,35 @@ public class Montanha extends Ambiente {
         super("Montanha", vegetacao + " " + terreno, 4, new String[] {"Pedras preciosas e metais", "Refúgio em cavernas seguras", "Água de degelo"}, 0.6, clima);
     }
 
-    @Override 
-    public void gerarEvento(Personagem personagem) {
+    @Override
+    public void gerarEvento() {
         List<Evento> eventosDisponiveis = getEventos();
         Random rand = new Random();
-        
-        boolean eventoOcorrido = false;
-        
+
+        Evento escolhido = null;
+
         for (Evento evento : eventosDisponiveis) {
             if (evento.getCondicaoAtivacao().equalsIgnoreCase(getNome())) {
                 if (rand.nextDouble() < evento.getProbabilidadeOcorrencia()) {
-                System.out.println("Evento ativado: " + evento.getNome());
-                System.out.println(evento.getDescricao());
-                evento.executar(personagem, this);
-                eventoOcorrido = true;
+                    escolhido = evento;
+                    break;
                 }
             }
-            else{
-                System.out.println("Não ocorreu nenhum evento");
-            }
         }
-     }
-    
+
+        if (escolhido != null) {
+            System.out.println("Evento sorteado: " + escolhido.getNome());
+            System.out.println(escolhido.getDescricao());
+
+        } else {
+            System.out.println("Nenhum evento sorteado.");
+        }
+    }
+
+
+
     @Override
-    public void explorar() {
+    public void explorar(Personagem jogador) {
         String[] recursos = getRecursos();
         Random rand = new Random();
         int index = rand.nextInt(recursos.length);

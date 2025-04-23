@@ -2,16 +2,16 @@ import java.util.Random;
 import java.util.List;
 public class RuinasAbandonadas extends Ambiente{
   
-    private String estruturas = "As estruturas estão bem instáveis e podem desmoronar a qualquer momento";
-    private String ocupacao = "Algumas ruínas podem estar ocupadas por outros sobreviventes";
-    private String clima = "Os abrigos oferecem boa proteção contra o clima";
+    private static final String estruturas = "As estruturas estão bem instáveis e podem desmoronar a qualquer momento";
+    private static final String ocupacao = "Algumas ruínas podem estar ocupadas por outros sobreviventes";
+    private static final String clima = "Os abrigos oferecem boa proteção contra o clima";
 
   public RuinasAbandonadas(){
     super("Ruinas Abandonadas", estruturas + ocupacao, 3, new String[] {"Municao", "Ferramentas", "Alimentos enlatados", "Mapas e pistas"}, 0.5, "Ensolarado, mas "+ clima);
   }
-
+    /*
    @Override 
-       public void gerarEvento(Personagem jogador) {
+       public void gerarEvento() {
            List<Evento> eventosDisponiveis = getEventos();
            Random rand = new Random();
 
@@ -32,6 +32,32 @@ public class RuinasAbandonadas extends Ambiente{
                System.out.println("Nenhum evento ocorreu.");
            }
        }
+        */
+    @Override
+    public void gerarEvento() {
+        List<Evento> eventosDisponiveis = getEventos();
+        Random rand = new Random();
+
+        Evento escolhido = null;
+
+        for (Evento evento : eventosDisponiveis) {
+            if (evento.getCondicaoAtivacao().equalsIgnoreCase(getNome())) {
+                if (rand.nextDouble() < evento.getProbabilidadeOcorrencia()) {
+                    escolhido = evento;
+                    break;
+                }
+            }
+        }
+
+        if (escolhido != null) {
+            System.out.println("Evento sorteado: " + escolhido.getNome());
+            System.out.println(escolhido.getDescricao());
+
+        } else {
+            System.out.println("Nenhum evento sorteado.");
+        }
+    }
+
 
        @Override
        public void explorar(Personagem jogador) {
@@ -66,16 +92,16 @@ public class RuinasAbandonadas extends Ambiente{
        private Item criarItem(String recurso) {
            switch (recurso) {
                case "Municao":
-                   return new Armas("Municao", 1.0, 10);
+                   return new Armas("Municao", 1.0, 10,"distancia",5,5);
                case "Ferramentas":
-                   return new Ferramentas("Ferramentas", 5, 2); 
+                   return new Ferramentas("Ferramentas", 5, 2,"faca",5);
                case "Alimentos enlatados":
-                   return new Alimento("Alimentos enlatados", 2, 3);
+                   return new Alimento("Alimentos enlatados", 2, 3,5,"enlatado",5);
                case "Mapas e pistas":
-                  return new Materiais("Mapas e pistas", 2, 3);
+                  return new Materiais("Mapas e pistas", 2, 3,"mapa",5);
                default:
                    return null; 
            }
        }
    }
-}
+

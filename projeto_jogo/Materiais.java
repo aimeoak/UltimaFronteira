@@ -24,8 +24,8 @@ public class Materiais extends Item{
     this.resistencia = resistencia;
   }
   @Override
-  public void usar() {
-      // Nada acontece
+  public int usar() {
+    return super.usar();
   }
   public void combinar (Materiais outroMaterial){
     String t1 = this.getTipo();

@@ -9,9 +9,8 @@ public class Floresta extends Ambiente {
    public Floresta() {
           super("Floresta", vegetacao + " " + fauna, 2, new String[] {"Frutas", "Raízes", "Cogumelos", "Madeira", "Pequenos animais"}, 0.4, "Alta umidade -> Dificulta o acendimento de fogueiras");
       }
-
-    @Override 
-    public void gerarEvento(Personagem jogador) {
+    @Override
+    public void gerarEvento() {
         List<Evento> eventosDisponiveis = getEventos();
         Random rand = new Random();
 
@@ -22,16 +21,20 @@ public class Floresta extends Ambiente {
                 if (rand.nextDouble() < evento.getProbabilidadeOcorrencia()) {
                     System.out.println("Evento ativado: " + evento.getNome());
                     System.out.println(evento.getDescricao());
-                    evento.executar(jogador, this);
+                    evento.executar(null, this);
                     eventoOcorrido = true;
                 }
             }
         }
+
         if (!eventoOcorrido) {
             System.out.println("Nenhum evento ocorreu.");
         }
     }
-       @Override
+
+
+
+    @Override
     public void explorar(Personagem personagem) {
         String[] recursos = getRecursos();
         Random rand = new Random();
@@ -60,13 +63,13 @@ public class Floresta extends Ambiente {
     private Item criarItem(String recurso) {
         switch (recurso) {
             case "Frutas":
-                return new Alimentos("Frutas", 1.5, 8); 
+                return new Alimento("Frutas", 1.5, 8,5,"fruta",1);
             case "Raízes":
-                return new Alimentos("Raízes", 0.7, 5);
+                return new Alimento("Raízes", 0.7, 5,3,"raiz",3);
             case "Cogumelos":
-                return new Alimentos("Cogumelos", 1.0, 2); 
+                return new Alimento("Cogumelos", 1.0, 2,2,"cogumelo",3);
             case "Pequenos animais":
-                return new Alimentos("Carne", 2.0, 12); 
+                return new Alimento("Carne", 2.0, 12,5,"carne",3);
             default:
                 return null; 
         }

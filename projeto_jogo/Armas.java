@@ -33,8 +33,8 @@ public class Armas extends Item{
   }
 
   @Override
-  public void usar(){
-    //NADA
+  public int usar(){
+    return super.usar();
   }
 
   public void atacar(Personagem personagem){ //personagem é o alvo

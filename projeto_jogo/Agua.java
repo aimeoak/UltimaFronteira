@@ -24,8 +24,8 @@ public class Agua extends Item{
   }
 
   @Override
-  public void usar() {
-      // Nada acontece
+  public int usar() {
+    return super.usar();
   }
   public void beber(Personagem personagem){
     if (potavel){

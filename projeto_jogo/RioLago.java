@@ -3,16 +3,16 @@ import java.util.List;
 
 public class RioLago extends Ambiente {
     
-    private String agua = "Água em abundância, pode ser potável ou precisar de purificação";
-    private String pesca = "Peixes podem ser uma excelente fonte de alimento";
-    private String terreno = "O terreno é lamacento, o que pode dificultar a locomoção";
+    private static final String agua = "Água em abundância, pode ser potável ou precisar de purificação";
+    private static final String pesca = "Peixes podem ser uma excelente fonte de alimento";
+    private static final String terreno = "O terreno é lamacento, o que pode dificultar a locomoção";
 
     public RioLago() {
-        super("Rio/Lago", agua + pesca + terreno, 2, new String[] {"Peixes e algas comestíveis", "Água doce", "Materiais de construção"}, 0.4, "Ensolarado");
+        super("Rio/Lago", agua + " " + pesca + " " + terreno, 2, new String[] {"Peixes e algas comestíveis", "Água doce", "Materiais de construção"}, 0.4, "Ensolarado");
     }
-
+    /*
     @Override 
-    public void gerarEvento(Personagem jogador) {
+    public void gerarEvento() {
         List<Evento> eventosDisponiveis = getEventos();
         Random rand = new Random();
 
@@ -33,7 +33,31 @@ public class RioLago extends Ambiente {
             System.out.println("Nenhum evento ocorreu.");
         }
     }
+     */
+    @Override
+    public void gerarEvento() {
+        List<Evento> eventosDisponiveis = getEventos();
+        Random rand = new Random();
 
+        Evento escolhido = null;
+
+        for (Evento evento : eventosDisponiveis) {
+            if (evento.getCondicaoAtivacao().equalsIgnoreCase(getNome())) {
+                if (rand.nextDouble() < evento.getProbabilidadeOcorrencia()) {
+                    escolhido = evento;
+                    break;
+                }
+            }
+        }
+
+        if (escolhido != null) {
+            System.out.println("Evento sorteado: " + escolhido.getNome());
+            System.out.println(escolhido.getDescricao());
+
+        } else {
+            System.out.println("Nenhum evento sorteado.");
+        }
+    }
     @Override
     public void explorar(Personagem jogador) {
         String[] recursos = getRecursos();
@@ -67,11 +91,11 @@ public class RioLago extends Ambiente {
     private Item criarItem(String recurso) {
         switch (recurso) {
             case "Água doce":
-                return new Agua("Água doce", 1.0, 10);
+                return new Agua("Água doce", 1.0, 10,5,true);
             case "Materiais de construção":
-                return new Materiais("Materiais de construção", 5, 2); 
+                return new Materiais("Materiais de construção", 5, 2,"madeira",5);
             case "Peixes e algas comestíveis":
-                return new Alimento("Peixes e algas comestíveis", 2, 3);
+                return new Alimento("Peixes e algas comestíveis", 2, 3,5,"peixe",3);
             default:
                 return null; 
         }
