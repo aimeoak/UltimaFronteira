@@ -2,34 +2,30 @@ import java.util.Random;
 import java.util.List;
 public class Caverna extends Ambiente{
   
-  private static final String luz = "Baixa iluminação: para uma exploração eficiente será necessária uma lanterna ou tocha";
-  private static final String criaturas = "Pode ter a presença de criaturas desconhecidas";
+    private static final String luz = "Baixa iluminação: para uma exploração eficiente será necessária uma lanterna ou tocha";
+    private static final String criaturas = "Pode ter a presença de criaturas desconhecidas";
   private static final String aguaGotas = "É um local com possivelmente a presença de água de gotejamento";
 
     public Caverna() {
         super("Caverna", luz + criaturas + aguaGotas, 1, new String[] {"Pedras preciosas e metais", "Pequenos lagos subterrâneos", "Ossos e vestígios de exploradores antigos"}, 0.2, "Frio");
     }
 
-   @Override 
-      public void gerarEvento(Personagem personagem) {
-          List<Evento> eventosDisponiveis = getEventos();
-          Random rand = new Random();
+    @Override
+        public void gerarEvento() {
+            List<Evento> eventosDisponiveis = getEventos();
+            Random rand = new Random();
 
-          boolean eventoOcorrido = false;
+            Evento escolhido = null;
 
-          for (Evento evento : eventoDisponiveis) {
-              if (evento.getCondicaoAtivacao().equalsIgnoreCase(getNome())) {
-                
-                  if (rand.nextDouble() < evento.getProbabilidadeOcorrencia()) {
-                    
-                  System.out.println("Evento ativado: " + evento.getNome());
-                  System.out.println(evento.getDescricao());
-                  evento.executar(personagem, this);
-                  eventoOcorrido = true;
-                  }
-              }
-          }
-
+            for (Evento evento : eventosDisponiveis) {
+                if (evento.getCondicaoAtivacao().equalsIgnoreCase(getNome())) {
+                    if (rand.nextDouble() < evento.getProbabilidadeOcorrencia()) {
+                        escolhido = evento;
+                        break;
+                    }
+                }
+            }
+        }
          @Override
             public void explorar(Personagem personagem) {
                 String[] recursos = getRecursos();
@@ -64,9 +60,9 @@ public class Caverna extends Ambiente{
             private Item criarItem(String recurso) {
                 switch (recurso) {
                     case "Pedras preciosas e metais":
-                        return new Materiais("Pedra preciosa", 1.0, 10); 
+                        return new Materiais("Pedra preciosa", 1.0, 10, "Minério", 100); 
                     case "Ossos e vestígios de exploradores antigos":
-                        return new Materiais("Ossos e vestígios de exploradores antigos", 5, 2);
+                        return new Materiais("Ossos e vestígios de exploradores antigos", 5.0, 2, "Histórico", 50);
                     default:
                         return null; 
                 }
