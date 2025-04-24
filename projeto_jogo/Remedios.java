@@ -28,7 +28,7 @@ public class Remedios extends Item{
   }
 
 
-  public void usar(Personagem personagem) {
+  public void usar(Personagem jogador) {
       System.out.println("Usando o remédio " + getNome() + " de tipo " + tipo + " com efeito " + efeito);
 
       if (tipo.equals("Analgésico")) {
