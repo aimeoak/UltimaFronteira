@@ -43,5 +43,9 @@ public class Ferramentas extends Item{
         setDurabilidade(getDurabilidade() - 1);
         return getDurabilidade();
     }
+    @Override
+    public String toString(){
+        return super.toString() + ", Tipo: " + tipo + ", Eficiência: " + eficiencia;
+    }
 
 }
