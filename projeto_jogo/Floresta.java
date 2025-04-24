@@ -35,7 +35,7 @@ public class Floresta extends Ambiente {
 
 
     @Override
-    public void explorar(Personagem personagem) {
+    public void explorar(Personagem jogador) {
         String[] recursos = getRecursos();
         Random rand = new Random();
         int index = rand.nextInt(recursos.length);
