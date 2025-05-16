@@ -27,7 +27,7 @@ public class Agua extends Item{
   public int usar() {
     return super.usar();
   }
-  public void beber(Personagem personagem){
+  public void beber(Personagem jogador){
     if (potavel){
       System.out.println("A água é potável.");
       personagem.aumentarSede(volume);
