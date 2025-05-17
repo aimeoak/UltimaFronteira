@@ -49,7 +49,7 @@ public class Floresta extends Ambiente {
         if (itemEncontrado != null) {
             
             if (recursoEncontrado.equals("Pedras preciosas e metais") || recursoEncontrado.equals("Água de degelo")) {
-                if (personagem.getInventario().adicionarItem(itemEncontrado)) {
+                if (jogador.getInventario().adicionarItem(itemEncontrado)) {
                     System.out.println(itemEncontrado.getNome() + " foi adicionado ao inventário.");
                 } else {
                     System.out.println("Não foi possível adicionar " + itemEncontrado.getNome() + " ao inventário.");

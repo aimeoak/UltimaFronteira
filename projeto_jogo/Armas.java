@@ -38,8 +38,8 @@ public class Armas extends Item{
   }
 
   public void atacar(Personagem jogador){ //jogador é o alvo
-    personagem.reduzirVida(dano);
-    System.out.println("Você atacou " + personagem.getNome() + " com " + getNome() + " causando " + dano + " de dano.");
+    jogador.reduzirVida(dano);
+    System.out.println("Você atacou " + jogador.getNome() + " com " + getNome() + " causando " + dano + " de dano.");
     setDurabilidade(getDurabilidade() - 1);
   }
 

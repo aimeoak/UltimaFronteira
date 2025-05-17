@@ -32,13 +32,13 @@ public class Remedios extends Item{
       System.out.println("Usando o remédio " + getNome() + " de tipo " + tipo + " com efeito " + efeito);
 
       if (tipo.equals("Analgésico")) {
-          personagem.aumentarVida(20);
+          jogador.aumentarVida(20);
       }
       if (tipo.equals("Antibiótico")) {
-          personagem.aumentarVida(30);
+          jogador.aumentarVida(30);
       }
       if (tipo.equals("Bandagem")){
-          personagem.aumentarVida(10);
+          jogador.aumentarVida(10);
       }
       else {
           System.out.println("Você não conseguiu fazer nada.");

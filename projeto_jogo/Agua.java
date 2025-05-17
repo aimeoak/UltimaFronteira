@@ -30,10 +30,10 @@ public class Agua extends Item{
   public void beber(Personagem jogador){
     if (potavel){
       System.out.println("A água é potável.");
-      personagem.aumentarSede(volume);
+      jogador.aumentarSede(volume);
     }
     else {
-      personagem.reduzirVida(10);
+      jogador.reduzirVida(10);
       System.out.println("A água está contaminada, você se envenenou.");
     }
 
