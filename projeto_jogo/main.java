@@ -1,7 +1,18 @@
+import Ambiente.Floresta;
+import Evento.Evento;
+import Item.Item;
+import Personagem.Medico;
+import Item.Alimento;
+import Evento.EventoDoencaFerimento;
+import Evento.EventoCriatura;
+import Evento.EventoDescoberta;
+import Evento.EventoClimatico;
+
 import java.util.Scanner;
 import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
+
 public class main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -11,7 +22,7 @@ public class main {
         System.out.println(jogador);
         jogador.getInventario().adicionarItem(carne);
 
-        Floresta floresta = new Floresta(); 
+        Floresta floresta = new Floresta();
         System.out.println("\nAMBIENTE: \n");
         System.out.print(floresta);
 
@@ -23,18 +34,18 @@ public class main {
         recursosFonte.add(new Alimento("Água Purificada", 0.3, 3, 5, "Água", 10));
 
         List<Evento> listaEventos = new ArrayList<>();
-        listaEventos.add(new EventoDoencaFerimento("Infecção", "infecção", 0.3, 15, "Floresta", "Infecção", Arrays.asList("Antibiótico")));
-        listaEventos.add(new EventoDoencaFerimento("Desidratação", "desidratação", 0.4, 10, "Floresta", "Desidratação",Arrays.asList("Água")));
-        listaEventos.add(new EventoDoencaFerimento("Fratura", "fratura", 0.2, 20, "Floresta", "Fratura",Arrays.asList("Analgésico")));
-        listaEventos.add(new EventoCriatura("Lobo", "lobo", 0.3, 15, "Floresta", "lobo", 3, Arrays.asList("Fugir", "Combater")));
-        listaEventos.add(new EventoCriatura("Cobra", "cobra", 0.4, 10, "Floresta", "cobra", 2, Arrays.asList("Fugir", "Combater")));
-        listaEventos.add(new EventoCriatura("Corvo", "corvo", 0.2, 5, "Floresta", "corvo", 1, Arrays.asList("Fugir", "Combater")));
-        listaEventos.add(new EventoClimatico("Tempestade", "tempestade", 0.4, 10, "Floresta", "tempestade", 3));
-        listaEventos.add(new EventoClimatico("Neve", "neve", 0.3, 15, "Floresta", "neve", 5));
-        listaEventos.add(new EventoClimatico("Incêndio", "incendio", 0.2, 20, "Floresta", "incendio", 4));
-        listaEventos.add(new EventoDescoberta("Abrigo","abrigo",0.5,0,"Floresta","abrigo",recursosAbrigo,""));
-        listaEventos.add(new EventoDescoberta("Fonte","fonte",0.7,0,"Floresta","fonte",recursosFonte,""));
-        listaEventos.add(new EventoDescoberta("Ruinas","ruinas",0.3,0,"Floresta","ruinas",recursosRuinas,""));
+        listaEventos.add(new EventoDoencaFerimento("Infecção", "infecção", 0.3, 15, "Ambiente.Floresta", "Infecção", Arrays.asList("Antibiótico")));
+        listaEventos.add(new EventoDoencaFerimento("Desidratação", "desidratação", 0.4, 10, "Ambiente.Floresta", "Desidratação",Arrays.asList("Água")));
+        listaEventos.add(new EventoDoencaFerimento("Fratura", "fratura", 0.2, 20, "Ambiente.Floresta", "Fratura",Arrays.asList("Analgésico")));
+        listaEventos.add(new EventoCriatura("Lobo", "lobo", 0.3, 15, "Ambiente.Floresta", "lobo", 3, Arrays.asList("Fugir", "Combater")));
+        listaEventos.add(new EventoCriatura("Cobra", "cobra", 0.4, 10, "Ambiente.Floresta", "cobra", 2, Arrays.asList("Fugir", "Combater")));
+        listaEventos.add(new EventoCriatura("Corvo", "corvo", 0.2, 5, "Ambiente.Floresta", "corvo", 1, Arrays.asList("Fugir", "Combater")));
+        listaEventos.add(new EventoClimatico("Tempestade", "tempestade", 0.4, 10, "Ambiente.Floresta", "tempestade", 3));
+        listaEventos.add(new EventoClimatico("Neve", "neve", 0.3, 15, "Ambiente.Floresta", "neve", 5));
+        listaEventos.add(new EventoClimatico("Incêndio", "incendio", 0.2, 20, "Ambiente.Floresta", "incendio", 4));
+        listaEventos.add(new EventoDescoberta("Abrigo","abrigo",0.5,0,"Ambiente.Floresta","abrigo",recursosAbrigo,""));
+        listaEventos.add(new EventoDescoberta("Fonte","fonte",0.7,0,"Ambiente.Floresta","fonte",recursosFonte,""));
+        listaEventos.add(new EventoDescoberta("Ruinas","ruinas",0.3,0,"Ambiente.Floresta","ruinas",recursosRuinas,""));
 
         GerenciadorDeEventos gerenciador = new GerenciadorDeEventos(0.8,listaEventos);
 

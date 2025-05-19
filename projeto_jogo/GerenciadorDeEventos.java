@@ -1,3 +1,7 @@
+import Ambiente.Ambiente;
+import Evento.Evento;
+import Personagem.Personagem;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
