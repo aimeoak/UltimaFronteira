@@ -31,7 +31,8 @@ public class Agua extends Item {
   public int usar() {
     return super.usar();
   }
-  public void beber(Personagem jogador){
+
+ /* public void beber(Personagem jogador){
     if (potavel){
       System.out.println("A água é potável.");
       jogador.aumentarSede(volume);
@@ -44,6 +45,40 @@ public class Agua extends Item {
     setDurabilidade(getDurabilidade() - 1);
 
     if (getDurabilidade() <= 0) {
+      System.out.println("A água acabou!");
+    }
+  }
+
+  */
+
+  public void beber(Personagem jogador) {
+    int quantidadeConsumida = 25;
+
+    if (volume <= 0) {
+      System.out.println("Não há mais água para beber.");
+      return;
+    }
+
+    if (potavel) {
+      System.out.println("A água é potável.");
+      jogador.aumentarSede(quantidadeConsumida);
+    } else {
+      jogador.reduzirVida(10);
+      System.out.println("A água está contaminada, você se envenenou.");
+    }
+
+
+    volume -= quantidadeConsumida;
+
+
+    if (volume < 0) {
+      volume = 0;
+    }
+
+
+    setDurabilidade(getDurabilidade() - 1);
+
+    if (volume == 0 || getDurabilidade() <= 0) {
       System.out.println("A água acabou!");
     }
   }

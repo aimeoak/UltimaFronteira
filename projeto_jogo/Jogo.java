@@ -135,6 +135,23 @@ public class Jogo {
         }
         System.out.println("Você não tem alimentos no inventário!");
     }
+
+    private void consumirAgua(){
+        List<Item> itens = jogador.getInventario().getItens();
+        for (Item item : itens) {
+            if (item instanceof Agua) {
+
+                ((Agua) item).beber(jogador);
+                if (((Agua) item).getVolume() <= 0) {
+                    jogador.getInventario().removerItem(item);
+                    System.out.println(item.getNome() + " foi consumida completamente e removida do inventário.");
+                }
+                System.out.println("\n\nINFORMAÇÕES DO PERSONAGEM APÓS O CONSUMO DA ÁGUA\n");
+                System.out.println(jogador);
+                return;
+            }
+        }
+    }
     private Personagem escolherPersonagem(){
         System.out.println("Escolha seu personagem: ");
         System.out.println("1. Médico - habilidades de cura");
@@ -158,7 +175,7 @@ public class Jogo {
         }
     }
     private void executarAcoesDojogador(){
-        System.out.println("O que você deseja fazer? (1) Comer (2) Explorar  (3) Ação especial");
+        System.out.println("O que você deseja fazer? (1) Comer (2) Explorar  (3) Ação especial (4) Beber Água");
         int escolha = scanner.nextInt();
         switch (escolha) {
             case 1:
@@ -170,6 +187,8 @@ public class Jogo {
             case 3:
                 jogador.acaoEspecial();
                 break;
+            case 4:
+                consumirAgua();
             default:
                 System.out.println("Opção inválida!");
         }
