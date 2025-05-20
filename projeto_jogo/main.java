@@ -1,3 +1,4 @@
+/*
 import Ambiente.Floresta;
 import Evento.Evento;
 import Item.Item;
@@ -12,9 +13,13 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
-
+*/
 public class main {
     public static void main(String[] args) {
+        Jogo jogo = new Jogo();
+        jogo.iniciar();
+
+        /*
         Scanner scanner = new Scanner(System.in);
         System.out.println("ÙLTIMA FRONTEIRA\n\nEstas são as informações do seu personagem: \n");
         Medico jogador = new Medico("João");
@@ -135,7 +140,7 @@ public class main {
         }
 
         scanner.close();
-        
+        */
 
     }
 

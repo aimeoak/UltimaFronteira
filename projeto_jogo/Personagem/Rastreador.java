@@ -9,7 +9,8 @@ public class Rastreador extends Personagem {
         super(nome, 90, 70, 70, 100, 80);
 
     }
-    public void encontrarRecursos(Ambiente ambiente){
+
+    public void procurarRecursos(Ambiente ambiente){
         String [] recursos = ambiente.getRecursos();
         if(recursos.length == 0){
             System.out.println(this.getNome() + " procurou, mas não encontrou nenhum recurso.");
@@ -20,7 +21,10 @@ public class Rastreador extends Personagem {
         System.out.println(this.getNome() + " encontrou o recurso " + recursoEncontrado);
 
         }
-
+    @Override
+    public void acaoEspecial(){
+        System.out.println("O rastreador  " + this.getNome() + " procurou, mas não encontrou nenhum recurso.");
+    }
 
 
 }

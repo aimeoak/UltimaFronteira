@@ -169,6 +169,10 @@ public class Personagem {
             envenenado = false;  // Se o veneno acabou, o jogador já não está mais envenenado
         }
     }
+    public void acaoEspecial() {
+        System.out.println("Este personagem não possui uma ação especial.");
+    }
+
 
     @Override
     public String toString(){

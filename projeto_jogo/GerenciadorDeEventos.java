@@ -9,8 +9,8 @@ public class GerenciadorDeEventos {
     private List<Evento> eventosPossiveis;
     private List<Evento> historicoEventos;
     private double probabilidadeOcorrencia;
-
-    public GerenciadorDeEventos(double probabilidadeOcorrencia, List<Evento> eventosPossiveis){
+    //Tire  do argumento do construtor
+    public GerenciadorDeEventos(double probabilidadeOcorrencia,List<Evento> eventosPossiveis){
         this.eventosPossiveis= eventosPossiveis;
         this.historicoEventos= new ArrayList<>();
         this.probabilidadeOcorrencia = probabilidadeOcorrencia;
@@ -44,6 +44,8 @@ public class GerenciadorDeEventos {
 
         return null;
     }
+
+
     public void aplicarEvento(Personagem jogador, Ambiente local){
         Evento evento = sortearEvento(local);
 
@@ -54,12 +56,16 @@ public class GerenciadorDeEventos {
             System.out.println("Nenhum evento ocorreu neste turno.");
         }
     }
+    /*
     public void removerEvento(Evento evento){
         eventosPossiveis.remove(evento);
     }
+     */
     public List<Evento>getHistoricoEventos(){
         return historicoEventos;
     }
+
+
 
 
 
