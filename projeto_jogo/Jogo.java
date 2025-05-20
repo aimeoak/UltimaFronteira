@@ -14,6 +14,9 @@ public class Jogo {
     private Ambiente ambienteAtual;
     private GerenciadorDeEventos gerenciador;
     private Scanner scanner;
+
+    private GerenciadorDeAmbientes gerenciadorDeAmbientes;
+
     private int contadorTurnosNoAmbiente = 0;
     private int indiceAmbienteAtual = 0;
 
@@ -22,7 +25,13 @@ public class Jogo {
     public Jogo() {
         scanner = new Scanner(System.in);
         jogador = escolherPersonagem();
-        ambienteAtual = new Floresta();
+
+        List<Ambiente> ambientes = List.of(new Floresta(), new RioLago(), new Caverna(), new Montanha(), new RuinasAbandonadas());
+        gerenciadorDeAmbientes = new GerenciadorDeAmbientes(ambientes, new ArrayList<>());
+
+        ambienteAtual = ambientes.get(0);
+
+
         jogador.getInventario().adicionarItem(new Alimento("Carne", 2.0, 1, 10, "Carne", 3));
         gerenciador = new GerenciadorDeEventos(0.8,inicializarEventos());
 
@@ -58,6 +67,8 @@ public class Jogo {
         while (true) {
             System.out.println("\n\n===TURNO: " + turno + "===");
             exibirStatusPersonagem();
+            System.out.println(ambienteAtual);
+
 
             ambienteAtual.modificarClima();
             desgasteNatural();
@@ -81,14 +92,30 @@ public class Jogo {
 
             turno++;
             contadorTurnosNoAmbiente++;
-            if (contadorTurnosNoAmbiente >= 5) {
+            //if (contadorTurnosNoAmbiente >= 5) {
                 //mudarParaProximoAmbiente();
-                System.out.println("\nVocê avançou para um novo ambiente: " + ambienteAtual.getNome());
+            //    System.out.println("\nVocê avançou para um novo ambiente: " + ambienteAtual.getNome());
+            //    contadorTurnosNoAmbiente = 0;
+         //   }
+            if (contadorTurnosNoAmbiente >= 5) {
+                List<Ambiente> ambientes = gerenciadorDeAmbientes.getAmbientesDisponiveis();
+
+                int proximoIndice = (indiceAmbienteAtual + 1) % ambientes.size();
+                Ambiente novoAmbiente = ambientes.get(proximoIndice);
+                indiceAmbienteAtual = proximoIndice;
+
+                gerenciadorDeAmbientes.mudarAmbiente(jogador, novoAmbiente);
+                ambienteAtual = novoAmbiente;
+
                 contadorTurnosNoAmbiente = 0;
             }
-
         }
         scanner.close();
+
+        System.out.println("Histórico de movimentações:");
+        for (Ambiente a : gerenciadorDeAmbientes.getHistoricoMovimentacao()) {
+            System.out.println("- " + a.getNome());
+        }
     }
 
     private void consumirAlimento() {
