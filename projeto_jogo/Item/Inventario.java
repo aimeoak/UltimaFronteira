@@ -1,5 +1,5 @@
 package Item;
-import excecoes.InventarioCheioException;
+import Exception.InventarioCheioException;
 import Personagem.Personagem;
 
 import java.util.ArrayList;

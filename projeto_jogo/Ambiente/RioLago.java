@@ -6,7 +6,7 @@ import Personagem.Personagem;
 import Item.Agua;
 import Item.Materiais;
 import Item.Alimento;
-import excecoes.InventarioCheioException;
+import Exception.InventarioCheioException;
 
 import java.util.Random;
 import java.util.List;

@@ -4,7 +4,7 @@ import Personagem.Personagem;
 import Item.Item;
 import Item.Alimento;
 import Ambiente.Ambiente;
-import excecoes.InventarioCheioException;
+import Exception.InventarioCheioException;
 
 import java.util.List;
 import java.util.Arrays;

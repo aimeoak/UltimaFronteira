@@ -7,7 +7,7 @@ import Item.Alimento;
 import Personagem.Personagem;
 import Evento.Evento;
 import Item.Item;
-import excecoes.InventarioCheioException;
+import Exception.InventarioCheioException;
 
 import java.util.Random;
 import java.util.List;

@@ -1,4 +1,4 @@
-package excecoes;
+package Exception;
 public class MorteException extends RuntimeException {
     private final String causa;
 

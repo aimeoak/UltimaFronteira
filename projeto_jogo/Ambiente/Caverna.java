@@ -4,7 +4,7 @@ import Personagem.Personagem;
 import Item.Item;
 import Evento.Evento;
 import Item.Materiais;
-import excecoes.InventarioCheioException;
+import Exception.InventarioCheioException;
 
 
 

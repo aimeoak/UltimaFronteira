@@ -4,7 +4,7 @@ import Personagem.Personagem;
 import Item.Item;
 import Evento.Evento;
 import Item.Alimento;
-import excecoes.InventarioCheioException;
+import Exception.InventarioCheioException;
 import java.util.Random;
 import java.util.List;
 public class Floresta extends Ambiente {
