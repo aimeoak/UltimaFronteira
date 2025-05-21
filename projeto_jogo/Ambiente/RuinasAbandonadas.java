@@ -7,6 +7,7 @@ import Item.Alimento;
 import Personagem.Personagem;
 import Evento.Evento;
 import Item.Item;
+import excecoes.InventarioCheioException;
 
 import java.util.Random;
 import java.util.List;
@@ -67,8 +68,40 @@ public class RuinasAbandonadas extends Ambiente {
             System.out.println("Nenhum evento sorteado.");
         }
     }
+    @Override
+    public void explorar(Personagem jogador) {
+        String[] recursos = getRecursos();
+        Random rand = new Random();
+        int index = rand.nextInt(recursos.length);
+
+        String recursoEncontrado = recursos[index];
+
+        System.out.println("Você encontrou " + recursoEncontrado);
+
+        Item itemEncontrado = criarItem(recursoEncontrado);
+
+        if (itemEncontrado != null) {
+            if (recursoEncontrado.equals("Municao") ||
+                    recursoEncontrado.equals("Item.Item.Ferramentas") ||
+                    recursoEncontrado.equals("Alimentos enlatados") ||
+                    recursoEncontrado.equals("Mapas e pistas")) {
+
+                try {
+                    jogador.getInventario().adicionarItem(itemEncontrado);
+                    System.out.println(itemEncontrado.getNome() + " foi adicionado ao inventário.");
+                } catch (InventarioCheioException e) {
+                    System.out.println("Não foi possível adicionar " + itemEncontrado.getNome() + " ao inventário.");
+                    System.out.println(e.getMessage());
+                }
+
+            } else {
+                System.out.println("Este item não pode ser adicionado ao inventário.");
+            }
+        }
+    }
 
 
+        /*
        @Override
        public void explorar(Personagem jogador) {
            String[] recursos = getRecursos();
@@ -98,6 +131,8 @@ public class RuinasAbandonadas extends Ambiente {
                }
            }
        }
+
+         */
 
        private Item criarItem(String recurso) {
            switch (recurso) {

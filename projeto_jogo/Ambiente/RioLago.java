@@ -6,6 +6,7 @@ import Personagem.Personagem;
 import Item.Agua;
 import Item.Materiais;
 import Item.Alimento;
+import excecoes.InventarioCheioException;
 
 import java.util.Random;
 import java.util.List;
@@ -17,7 +18,7 @@ public class RioLago extends Ambiente {
     private static final String terreno = "O terreno é lamacento, o que pode dificultar a locomoção";
 
     public RioLago() {
-        super("Rio/Lago", agua + " " + pesca + " " + terreno, 2, new String[] {"Peixes e algas comestíveis", "Água doce", "Item.Materiais de construção"}, 0.4, "Ensolarado");
+        super("Ambiente.RioLago", agua + " " + pesca + " " + terreno, 2, new String[] {"Peixes e algas comestíveis", "Água doce", "Item.Materiais de construção"}, 0.4, "Ensolarado");
     }
     /*
     @Override 
@@ -72,6 +73,37 @@ public class RioLago extends Ambiente {
         String[] recursos = getRecursos();
         Random rand = new Random();
         int index = rand.nextInt(recursos.length);
+        String recursoEncontrado = recursos[index];
+
+        System.out.println("Você encontrou " + recursoEncontrado);
+        Item itemEncontrado = criarItem(recursoEncontrado);
+
+        if (itemEncontrado != null) {
+            try {
+                // Verifica se o recurso é dos tipos permitidos
+                if (recursoEncontrado.equals("Peixes e algas comestíveis") ||
+                        recursoEncontrado.equals("Água doce") ||
+                        recursoEncontrado.equals("Materiais de construção")) { // Removi "Item." do nome
+
+                    // Tenta adicionar o item (método agora lança exceção)
+                    jogador.getInventario().adicionarItem(itemEncontrado);
+                    System.out.println(itemEncontrado.getNome() + " foi adicionado ao inventário.");
+
+                } else {
+                    System.out.println("Este item não pode ser adicionado ao inventário.");
+                }
+            } catch (InventarioCheioException e) {
+                // Captura a exceção específica
+                System.out.println("Falha ao adicionar " + itemEncontrado.getNome() + ": " + e.getMessage());
+            }
+        }
+    }
+    /*
+    @Override
+    public void explorar(Personagem jogador) {
+        String[] recursos = getRecursos();
+        Random rand = new Random();
+        int index = rand.nextInt(recursos.length);
 
         String recursoEncontrado = recursos[index];
 
@@ -96,6 +128,7 @@ public class RioLago extends Ambiente {
             }
         }
     }
+     */
 
     private Item criarItem(String recurso) {
         switch (recurso) {

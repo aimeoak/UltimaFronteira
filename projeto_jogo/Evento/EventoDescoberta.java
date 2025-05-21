@@ -4,6 +4,7 @@ import Personagem.Personagem;
 import Item.Item;
 import Item.Alimento;
 import Ambiente.Ambiente;
+import excecoes.InventarioCheioException;
 
 import java.util.List;
 import java.util.Arrays;
@@ -38,7 +39,7 @@ public class EventoDescoberta extends Evento {
             System.out.println("Você não encontrou nada útil.");
 
         }
-    }*/
+    }
     @Override
     public void executar(Personagem jogador, Ambiente local) {
         Random random = new Random();
@@ -92,6 +93,65 @@ public class EventoDescoberta extends Evento {
             }
         }
     }
+    */
+    @Override
+    public void executar(Personagem jogador, Ambiente local) {
+        Random random = new Random();
+        Item itemEncontrado = null;
+
+        switch (tipoDescoberta.toLowerCase()) {
+            case "abrigo":
+                jogador.aumentarEnergia(5);
+                jogador.aumentarSanidade(5);
+
+                List<Item> itensAbrigo = Arrays.asList(
+                        new Alimento("Carne seca", 1, 5, 10, "carne", 3),
+                        new Alimento("Sopa", 1, 3, 5, "enlatado", 10)
+                );
+
+                itemEncontrado = itensAbrigo.get(random.nextInt(itensAbrigo.size()));
+                break;
+
+            case "fonte":
+                jogador.aumentarSanidade(5);
+
+                List<Item> itensFonte = Arrays.asList(
+                        new Alimento("Água", 0.7, 2, 4, "agua", 8),
+                        new Alimento("Fruta", 0.5, 1, 3, "fruta", 4)
+                );
+
+                itemEncontrado = itensFonte.get(random.nextInt(itensFonte.size()));
+                break;
+
+            case "ruinas":
+                jogador.aumentarSanidade(5);
+
+                List<Item> itensRuinas = Arrays.asList(
+                        new Alimento("Cogumelo Antigo", 0.5, 2, 6, "cogumelo", 6),
+                        new Alimento("Carne enlatada", 1.5, 3, 7, "carne", 5)
+                );
+
+                itemEncontrado = itensRuinas.get(random.nextInt(itensRuinas.size()));
+                break;
+
+            default:
+                System.out.println("Você não encontrou nada útil.");
+                return;
+        }
+
+        if (itemEncontrado != null) {
+            System.out.println("Você encontrou: " + itemEncontrado.getNome());
+
+            try {
+                jogador.getInventario().adicionarItem(itemEncontrado);
+                System.out.println(itemEncontrado.getNome() + " foi adicionado ao inventário.");
+            } catch (InventarioCheioException e) {
+                System.out.println("Não foi possível adicionar " + itemEncontrado.getNome() + " ao inventário.");
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
 
 
     private String gerarDescricao() {

@@ -4,7 +4,7 @@ import Personagem.Personagem;
 import Item.Item;
 import Evento.Evento;
 import Item.Alimento;
-
+import excecoes.InventarioCheioException;
 import java.util.Random;
 import java.util.List;
 public class Floresta extends Ambiente {
@@ -39,8 +39,33 @@ public class Floresta extends Ambiente {
         }
     }
 
+    @Override
+    public void explorar(Personagem jogador) {
+        String[] recursos = getRecursos();
+        Random rand = new Random();
+        int index = rand.nextInt(recursos.length);
+        String recursoEncontrado = recursos[index];
 
+        System.out.println("Você encontrou " + recursoEncontrado);
+        Item itemEncontrado = criarItem(recursoEncontrado);
 
+        if (itemEncontrado != null) {
+            try {
+                if (recursoEncontrado.equals("Pedras preciosas e metais") ||
+                        recursoEncontrado.equals("Água de degelo")) {
+
+                    jogador.getInventario().adicionarItem(itemEncontrado);
+                    System.out.println(itemEncontrado.getNome() + " foi adicionado ao inventário.");
+                } else {
+                    System.out.println("Este item não pode ser adicionado ao inventário.");
+                }
+            } catch (InventarioCheioException e) {
+                System.out.println(e.getMessage()); // Mensagem da exceção
+                System.out.println("Você precisará descartar algo para carregar este item.");
+            }
+        }
+    }
+    /*
     @Override
     public void explorar(Personagem jogador) {
         String[] recursos = getRecursos();
@@ -66,6 +91,7 @@ public class Floresta extends Ambiente {
             }
         }
     }
+     */
 
     private Item criarItem(String recurso) {
         switch (recurso) {

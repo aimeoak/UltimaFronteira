@@ -33,6 +33,7 @@ public class Jogo {
 
 
         jogador.getInventario().adicionarItem(new Alimento("Carne", 2.0, 1, 10, "Carne", 3));
+        jogador.getInventario().adicionarItem(new Agua("Água", 2.0, 1, 10, true));
         gerenciador = new GerenciadorDeEventos(0.8,inicializarEventos());
 
     }
@@ -40,22 +41,32 @@ public class Jogo {
     private List<Evento> inicializarEventos() {
         List<Item> recursosAbrigo = List.of(new Alimento("Carne Enlatada", 0.5, 5, 10, "Carne", 3));
         List<Item> recursosRuinas = List.of(new Alimento("Cogumelo Comestível", 0.2, 2, 8, "Cogumelo", 5));
-        List<Item> recursosFonte = List.of(new Alimento("Água Purificada", 0.3, 3, 5, "Água", 10));
+        List<Item> recursosFonte = List.of(new Agua("Garrafa de água", 2, 2, 5, true));
 
         return new ArrayList<>(List.of(
-                new EventoDoencaFerimento("Infecção", "infecção", 0.3, 15, "Ambiente.Floresta", "Infecção", List.of("Antibiótico")),
-                new EventoDoencaFerimento("Desidratação", "desidratação", 0.4, 10, "Ambiente.Floresta", "Desidratação", List.of("Água")),
+                new EventoDoencaFerimento("Infecção", "infecção", 0.3, 15, "Ambiente.RioLago", "Infecção", List.of("Antibiótico")),
+                new EventoDoencaFerimento("Desidratação", "desidratação", 0.4, 10, "Ambiente.RioLago", "Desidratação", List.of("Água")),
                 new EventoDoencaFerimento("Fratura", "fratura", 0.2, 20, "Ambiente.Floresta", "Fratura", List.of("Analgésico")),
+                new EventoDoencaFerimento("Fratura", "fratura", 0.2, 20, "Ambiente.Montanha", "Fratura", List.of("Analgésico")),
+                new EventoDoencaFerimento("Fratura", "fratura", 0.2, 20, "Ambiente.Caverna", "Fratura", List.of("Analgésico")),
+                new EventoDoencaFerimento("Fratura", "fratura", 0.2, 20, "Ambiente.RuinasAbandonadas", "Fratura", List.of("Analgésico")),
                 new EventoCriatura("Lobo", "lobo", 0.3, 15, "Ambiente.Floresta", "lobo", 3, List.of("Fugir", "Combater")),
-                new EventoCriatura("Cobra", "cobra", 0.4, 10, "Ambiente.Floresta", "cobra", 2, List.of("Fugir", "Combater")),
-                new EventoCriatura("Corvo", "corvo", 0.2, 5, "Ambiente.Floresta", "corvo", 1, List.of("Fugir", "Combater")),
+                new EventoCriatura("Lobo", "lobo", 0.3, 15, "Ambiente.Montanha", "lobo", 3, List.of("Fugir", "Combater")),
+                new EventoCriatura("Lobo", "lobo", 0.3, 15, "Ambiente.RuinasAbandonadas", "lobo", 3, List.of("Fugir", "Combater")),
+                new EventoCriatura("Cobra", "cobra", 0.4, 10, "Ambiente.Caverna", "cobra", 2, List.of("Fugir", "Combater")),
+                new EventoCriatura("Cobra", "cobra", 0.4, 10, "Ambiente.RuinasAbandonadas", "cobra", 2, List.of("Fugir", "Combater")),
+                new EventoCriatura("Corvo", "corvo", 0.2, 5, "Ambiente.Montanha", "corvo", 1, List.of("Fugir", "Combater")),
                 new EventoClimatico("Tempestade", "tempestade", 0.4, 10, "Ambiente.Floresta", "tempestade", 3),
-                new EventoClimatico("Neve", "neve", 0.3, 15, "Ambiente.Floresta", "neve", 5),
+                new EventoClimatico("Neve", "neve", 0.3, 15, "Ambiente.Montanha", "neve", 5),
                 new EventoClimatico("Incêndio", "incendio", 0.2, 20, "Ambiente.Floresta", "incendio", 4),
                 new EventoDescoberta("Abrigo", "abrigo", 0.5, 0, "Ambiente.Floresta", "abrigo", recursosAbrigo, ""),
+                new EventoDescoberta("Fonte", "fonte", 0.7, 0, "Ambiente.RioLago", "fonte", recursosFonte, ""),
+                new EventoDescoberta("Fonte", "fonte", 0.7, 0, "Ambiente.Montanha", "fonte", recursosFonte, ""),
+                new EventoDescoberta("Fonte", "fonte", 0.7, 0, "Ambiente.Caverna", "fonte", recursosFonte, ""),
+                new EventoDescoberta("Fonte", "fonte", 0.7, 0, "Ambiente.RuinasAbandonadas", "fonte", recursosFonte, ""),
                 new EventoDescoberta("Fonte", "fonte", 0.7, 0, "Ambiente.Floresta", "fonte", recursosFonte, ""),
-                new EventoDescoberta("Ruinas", "ruinas", 0.3, 0, "Ambiente.Floresta", "ruinas", recursosRuinas, "")
-        ));
+                new EventoDescoberta("Ruinas", "ruinas", 0.3, 0, "Ambiente.Caverna", "ruinas", recursosRuinas, ""),
+                new EventoDescoberta("Ruinas", "ruinas", 0.3, 0, "Ambiente.RuinasAbandonadas", "ruinas", recursosRuinas, "")));
     }
 
     public void iniciar() {
@@ -151,6 +162,7 @@ public class Jogo {
                 return;
             }
         }
+        System.out.println("Você não tem água no inventário!");
     }
     private Personagem escolherPersonagem(){
         System.out.println("Escolha seu personagem: ");
@@ -189,6 +201,7 @@ public class Jogo {
                 break;
             case 4:
                 consumirAgua();
+                break;
             default:
                 System.out.println("Opção inválida!");
         }

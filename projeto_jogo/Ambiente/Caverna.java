@@ -4,7 +4,7 @@ import Personagem.Personagem;
 import Item.Item;
 import Evento.Evento;
 import Item.Materiais;
-
+import excecoes.InventarioCheioException;
 
 
 
@@ -17,7 +17,7 @@ public class Caverna extends Ambiente {
   private static final String aguaGotas = "É um local com possivelmente a presença de água de gotejamento";
 
     public Caverna() {
-        super("Ambiente.Ambiente.Caverna", luz + criaturas + aguaGotas, 1, new String[] {"Pedras preciosas e metais", "Pequenos lagos subterrâneos", "Ossos e vestígios de exploradores antigos"}, 0.2, "Frio");
+        super("Ambiente.Caverna", luz + criaturas + aguaGotas, 1, new String[] {"Pedras preciosas e metais", "Pequenos lagos subterrâneos", "Ossos e vestígios de exploradores antigos"}, 0.2, "Frio");
     }
 
     @Override
@@ -36,6 +36,34 @@ public class Caverna extends Ambiente {
                 }
             }
         }
+    @Override
+    public void explorar(Personagem personagem) {
+        String[] recursos = getRecursos();
+        Random rand = new Random();
+        int index = rand.nextInt(recursos.length);
+        String recursoEncontrado = recursos[index];
+
+        System.out.println("Você encontrou " + recursoEncontrado);
+        Item itemEncontrado = criarItem(recursoEncontrado);
+
+        if (itemEncontrado != null) {
+            try {
+                if (recursoEncontrado.equals("Pedras preciosas e metais") ||
+                        recursoEncontrado.equals("Ossos e vestígios de exploradores antigos")) {
+
+                    // Tenta adicionar o item e captura a exceção se ocorrer
+                    personagem.getInventario().adicionarItem(itemEncontrado);
+                    System.out.println(itemEncontrado.getNome() + " foi adicionado ao inventário.");
+                } else {
+                    System.out.println("Este item não pode ser adicionado ao inventário.");
+                }
+            } catch (InventarioCheioException e) {
+                // Captura a exceção específica de inventário cheio
+                System.out.println("Não foi possível adicionar " + itemEncontrado.getNome() + ": " + e.getMessage());
+            }
+        }
+    }
+        /*
          @Override
             public void explorar(Personagem personagem) {
                 String[] recursos = getRecursos();
@@ -66,6 +94,7 @@ public class Caverna extends Ambiente {
                     }
                 }
             }
+         */
 
             private Item criarItem(String recurso) {
                 switch (recurso) {

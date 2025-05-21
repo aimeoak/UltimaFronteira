@@ -1,5 +1,5 @@
 package Item;
-
+import excecoes.InventarioCheioException;
 import Personagem.Personagem;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class Inventario {
         this.capacidadeMaxima = capacidadeMaxima;
         this.pesoAtual = 0;
     }
-
+    /*
     public boolean adicionarItem(Item item) {
         if ((pesoAtual + item.getPeso()) <= capacidadeMaxima) {
             itens.add(item);
@@ -27,6 +27,21 @@ public class Inventario {
             System.out.println("Inventário cheio! Não é possível adicionar " + item.getNome());
             return false;
         }
+    }
+
+     */
+    public void adicionarItem(Item item) throws InventarioCheioException {
+        double novoPeso = pesoAtual + item.getPeso();
+
+        if (novoPeso > capacidadeMaxima) {
+            double excesso = novoPeso - capacidadeMaxima;
+            throw new InventarioCheioException("Falha ao adicionar " + item.getNome() +
+                    " - Excesso: " + String.format("%.2f", excesso) + "kg");
+        }
+
+        itens.add(item);
+        pesoAtual = novoPeso;
+        System.out.println(item.getNome() + " adicionado com sucesso!");
     }
     public void removerItem(Item item) {
         if (this.itens.remove(item)) {
