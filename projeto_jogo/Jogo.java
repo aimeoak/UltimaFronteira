@@ -2,6 +2,7 @@ import Ambiente.Floresta;
 import Ambiente.*;
 import Evento.*;
 import Item.*;
+import Exception.MorteException;
 import Personagem.Personagem;
 import Personagem.Medico;
 import Personagem.Rastreador;
@@ -33,7 +34,7 @@ public class Jogo {
 
 
         jogador.getInventario().adicionarItem(new Alimento("Carne", 2.0, 1, 10, "Carne", 3));
-        jogador.getInventario().adicionarItem(new Agua("Água", 2.0, 1, 10, true));
+        jogador.getInventario().adicionarItem(new Agua("Agua", 2.0, 1, 10, true));
         gerenciador = new GerenciadorDeEventos(0.8,inicializarEventos());
 
     }
@@ -68,7 +69,62 @@ public class Jogo {
                 new EventoDescoberta("Ruinas", "ruinas", 0.3, 0, "Ambiente.Caverna", "ruinas", recursosRuinas, ""),
                 new EventoDescoberta("Ruinas", "ruinas", 0.3, 0, "Ambiente.RuinasAbandonadas", "ruinas", recursosRuinas, "")));
     }
+    public void iniciar() {
+        int turno = 1;
+        try {
+            informacoesInciais();
+            System.out.println("\nAMBIENTE: \n");
+            System.out.println(ambienteAtual);
 
+
+            while (true) {
+                System.out.println("\n\n=== TURNO: " + turno + " ===");
+                verificarMorte();
+                exibirStatusPersonagem();
+                System.out.println(ambienteAtual);
+                ambienteAtual.modificarClima();
+                desgasteNatural();
+
+                Evento eventoSorteado = gerenciador.sortearEvento(ambienteAtual);
+                if (eventoSorteado != null) {
+                    System.out.println("\n[EVENTO] " + eventoSorteado.getDescricao());
+                    eventoSorteado.executar(jogador, ambienteAtual);
+                } else {
+                    System.out.println("\nNenhum evento ocorreu neste turno.");
+                }
+                executarAcoesDoJogador();
+                jogador.aplicarEfeitoVeneno();
+                contadorTurnosNoAmbiente++;
+                if (contadorTurnosNoAmbiente >= 5) {
+                    List<Ambiente> ambientes = gerenciadorDeAmbientes.getAmbientesDisponiveis();
+
+                    int proximoIndice = (indiceAmbienteAtual + 1) % ambientes.size();
+                    Ambiente novoAmbiente = ambientes.get(proximoIndice);
+                    indiceAmbienteAtual = proximoIndice;
+
+                    gerenciadorDeAmbientes.mudarAmbiente(jogador, novoAmbiente);
+                    ambienteAtual = novoAmbiente;
+
+                    contadorTurnosNoAmbiente = 0;
+                }
+                turno++;
+            }
+
+        } catch (MorteException e) {
+            System.out.println("\n\n=== FIM DE JOGO ===");
+            System.out.println("Motivo: " + e.getCausa());
+            System.out.println(e.getMessage());
+            System.out.println("Sobreviveu por " + (turno-1) + " turnos");
+
+        } finally {
+            scanner.close();
+            System.out.println("Histórico de movimentações:");
+            for (Ambiente a : gerenciadorDeAmbientes.getHistoricoMovimentacao()) {
+                System.out.println("- " + a.getNome());
+            }
+        }
+    }
+    /*
     public void iniciar() {
         informacoesInciais();
         System.out.println("\nAMBIENTE: \n");
@@ -126,6 +182,21 @@ public class Jogo {
         System.out.println("Histórico de movimentações:");
         for (Ambiente a : gerenciadorDeAmbientes.getHistoricoMovimentacao()) {
             System.out.println("- " + a.getNome());
+        }
+    }
+     */
+    private void verificarMorte() {
+        if (jogador.getVida() <= 0) {
+            throw new MorteException("Sua vida chegou a zero!", "Ferimentos graves");
+        }
+        if (jogador.getFome() <= 0) {
+            throw new MorteException("Você morreu de fome!", "Fome extrema");
+        }
+        if (jogador.getSede() <= 0) {
+            throw new MorteException("Você morreu de sede!", "Desidratação");
+        }
+        if (jogador.getSanidade() <= 0) {
+            throw new MorteException("Você perdeu a sanidade!", "Loucura");
         }
     }
 
@@ -186,7 +257,7 @@ public class Jogo {
                 return new Medico(nome);
         }
     }
-    private void executarAcoesDojogador(){
+    private void executarAcoesDoJogador(){
         System.out.println("O que você deseja fazer? (1) Comer (2) Explorar  (3) Ação especial (4) Beber Água");
         int escolha = scanner.nextInt();
         switch (escolha) {
