@@ -14,9 +14,7 @@ public class Alimento extends Item {
         this.validade = validade;
     }  
     public void consumir(Personagem personagem){
-        if (tipoAlimento.equals("carne")){ 
-            System.out.println("Intoxicação alimentar!!");
-            personagem.reduzirVida(10);
+        if (tipoAlimento.equals("carne")){
             personagem.aumentarFome(valorNutricional);
             personagem.aumentarEnergia(valorNutricional);
 

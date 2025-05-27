@@ -4,6 +4,9 @@ import Personagem.Personagem;
 import Item.Item;
 import Evento.Evento;
 import Item.Materiais;
+import Item.Remedios;
+import Item.Agua;
+import Item.Alimento;
 import Exception.InventarioCheioException;
 
 
@@ -17,7 +20,7 @@ public class Caverna extends Ambiente {
   private static final String aguaGotas = "É um local com possivelmente a presença de água de gotejamento";
 
     public Caverna() {
-        super("Ambiente.Caverna", luz + criaturas + aguaGotas, 1, new String[] {"Pedras preciosas e metais", "Pequenos lagos subterrâneos", "Ossos e vestígios de exploradores antigos"}, 0.2, "Frio");
+        super("Ambiente.Caverna", luz + criaturas + aguaGotas, 1, new String[] {"Pedras preciosas e metais", "Agua doce", "Antibiotico","Bandagem","Morcego","Rato"}, 0.2, "Frio");
     }
 
     @Override
@@ -49,7 +52,11 @@ public class Caverna extends Ambiente {
         if (itemEncontrado != null) {
             try {
                 if (recursoEncontrado.equals("Pedras preciosas e metais") ||
-                        recursoEncontrado.equals("Ossos e vestígios de exploradores antigos")) {
+                        recursoEncontrado.equals("Agua doce")||
+                        recursoEncontrado.equals("Antibiotico")||
+                        recursoEncontrado.equals("Bandagem")||
+                        recursoEncontrado.equals("Morcego")||
+                        recursoEncontrado.equals("Rato")) {
 
                     // Tenta adicionar o item e captura a exceção se ocorrer
                     personagem.getInventario().adicionarItem(itemEncontrado);
@@ -63,45 +70,21 @@ public class Caverna extends Ambiente {
             }
         }
     }
-        /*
-         @Override
-            public void explorar(Personagem personagem) {
-                String[] recursos = getRecursos();
-                Random rand = new Random();
-                int index = rand.nextInt(recursos.length);
-
-                String recursoEncontrado = recursos[index];
-
-                System.out.println("Você encontrou " + recursoEncontrado);
-
-                Item itemEncontrado = criarItem(recursoEncontrado);
-
-                if (itemEncontrado != null) {
-                    
-                    if (recursoEncontrado.equals("Pedras preciosas e metais") || recursoEncontrado.equals("Ossos e vestígios de exploradores antigos")) {
-                      
-                        if (personagem.getInventario().adicionarItem(itemEncontrado)) {
-                            System.out.println(itemEncontrado.getNome() + " foi adicionado ao inventário.");
-                        } 
-                          
-                        else {
-                            System.out.println("Não foi possível adicionar " + itemEncontrado.getNome() + " ao inventário.");
-                        }
-                    } 
-                      
-                    else {
-                        System.out.println("Este item não pode ser adicionado ao inventário.");
-                    }
-                }
-            }
-         */
 
             private Item criarItem(String recurso) {
                 switch (recurso) {
                     case "Pedras preciosas e metais":
-                        return new Materiais("Pedra preciosa", 1.0, 10, "Minério", 100); 
-                    case "Ossos e vestígios de exploradores antigos":
-                        return new Materiais("Ossos e vestígios de exploradores antigos", 5.0, 2, "Histórico", 50);
+                        return new Materiais("Pedra preciosa", 1.0, 10, "Minério", 100);
+                    case "Agua doce":
+                        return new Agua("Agua", 1.0, 1,10,true);
+                    case "Antibiotico":
+                        return new Remedios("Antibiotico",2,2,"Antibiotico","Alívio imediato da dor");
+                    case "Bandagem":
+                        return new Remedios("Bandagem",0.5,3,"Bandagem","Estancamento de ferimentos");
+                    case "Morcego":
+                        return new Alimento("Morcego", 2.0, 3, 7,"carne",15);
+                    case "Rato":
+                        return new Alimento("Rato", 0.8, 2, 5, "carne", 15);
                     default:
                         return null; 
                 }

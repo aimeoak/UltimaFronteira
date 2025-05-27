@@ -4,6 +4,8 @@ import Personagem.Personagem;
 import Item.Item;
 import Evento.Evento;
 import Item.Alimento;
+import Item.Agua;
+import Item.Remedios;
 import Exception.InventarioCheioException;
 import java.util.Random;
 import java.util.List;
@@ -14,7 +16,7 @@ public class Floresta extends Ambiente {
 
 
    public Floresta() {
-          super("Ambiente.Floresta", vegetacao + " " + fauna, 2, new String[] {"Frutas", "Raízes", "Cogumelos", "Madeira", "Pequenos animais"}, 0.4, "Alta umidade -> Dificulta o acendimento de fogueiras");
+          super("Ambiente.Floresta", vegetacao + " " + fauna, 2, new String[] {"Frutas", "Raízes", "Cogumelos", "Planta Curativa", "Coelho","Agua"}, 0.4, "Alta umidade -> Dificulta o acendimento de fogueiras");
       }
     @Override
     public void gerarEvento() {
@@ -51,8 +53,12 @@ public class Floresta extends Ambiente {
 
         if (itemEncontrado != null) {
             try {
-                if (recursoEncontrado.equals("Pedras preciosas e metais") ||
-                        recursoEncontrado.equals("Água de degelo")) {
+                if (recursoEncontrado.equals("Frutas") ||
+                        recursoEncontrado.equals("Raízes")||
+                        recursoEncontrado.equals("Cogumelos")||
+                        recursoEncontrado.equals("Planta Curativa")||
+                        recursoEncontrado.equals("Coelho")||
+                        recursoEncontrado.equals("Agua")) {
 
                     jogador.getInventario().adicionarItem(itemEncontrado);
                     System.out.println(itemEncontrado.getNome() + " foi adicionado ao inventário.");
@@ -101,8 +107,12 @@ public class Floresta extends Ambiente {
                 return new Alimento("Raízes", 0.7, 5,3,"raiz",3);
             case "Cogumelos":
                 return new Alimento("Cogumelos", 1.0, 2,2,"cogumelo",3);
-            case "Pequenos animais":
-                return new Alimento("Carne", 2.0, 12,5,"carne",3);
+            case "Coelho":
+                return new Alimento("Coelho", 2.0, 3, 15,"carne",15);
+            case "Agua":
+                return new Agua("Agua", 1.5, 1, 5, true);
+            case "Planta Curativa":
+                return new Remedios("Planta curativa",0.5,1,"Bandagem","Estancamento de ferimentos");
             default:
                 return null; 
         }

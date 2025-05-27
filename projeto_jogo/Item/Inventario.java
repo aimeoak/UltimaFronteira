@@ -16,20 +16,7 @@ public class Inventario {
         this.capacidadeMaxima = capacidadeMaxima;
         this.pesoAtual = 0;
     }
-    /*
-    public boolean adicionarItem(Item item) {
-        if ((pesoAtual + item.getPeso()) <= capacidadeMaxima) {
-            itens.add(item);
-            pesoAtual += item.getPeso();
-            System.out.println(item.getNome() + " adicionado ao inventário.");
-            return true;
-        } else {
-            System.out.println("Inventário cheio! Não é possível adicionar " + item.getNome());
-            return false;
-        }
-    }
 
-     */
     public void adicionarItem(Item item) throws InventarioCheioException {
         double novoPeso = pesoAtual + item.getPeso();
 

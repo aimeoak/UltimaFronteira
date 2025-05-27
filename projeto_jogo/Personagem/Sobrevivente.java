@@ -7,10 +7,10 @@ public class Sobrevivente extends Personagem {
     }
     @Override
     public void acaoEspecial(){
-        aumentarSanidade(5);
+        aumentarSanidade(10);
         aumentarEnergia(10);
         System.out.println("O sobrevivente " + this.getNome() + " meditou;");
-        System.out.println("Foram recuparados 5 pontos de sanidade e 10 pontos de energia.");
+        System.out.println("Foram recuparados 10 pontos de sanidade e 10 pontos de energia.");
     }
 
 }

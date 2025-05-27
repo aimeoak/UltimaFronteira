@@ -40,9 +40,21 @@ public class Jogo {
     }
 
     private List<Evento> inicializarEventos() {
-        List<Item> recursosAbrigo = List.of(new Alimento("Carne Enlatada", 0.5, 5, 10, "Carne", 3));
-        List<Item> recursosRuinas = List.of(new Alimento("Cogumelo Comestível", 0.2, 2, 8, "Cogumelo", 5));
-        List<Item> recursosFonte = List.of(new Agua("Garrafa de água", 2, 2, 5, true));
+        List<Item> recursosAbrigo = List.of(
+                new Alimento("Carne Enlatada", 0.5, 5, 10, "Carne", 3),
+                new Remedios("Antibiotico",2,1,"Antibiotico","Alívio imediato da dor"),
+                new Remedios("Bandagem",0.5,2,"Bandagem","Estancamento de ferimentos")
+        );
+        List<Item> recursosRuinas = List.of(
+                new Alimento("Cogumelo Comestível", 0.2, 2, 8, "Cogumelo", 5),
+                new Remedios("Bandagem",0.5,3,"Bandagem","Estancamento de ferimentos"),
+                new Remedios("Analgesico",4,1,"Analgesico","Alívio imediato da dor")
+        );
+        List<Item> recursosFonte = List.of(
+                new Agua("Agua", 2, 2, 5, true),
+                new Remedios("Bandagem",0.5,3,"Bandagem","Estancamento de ferimentos"),
+                new Remedios("Antibiotico",2,1,"Antibiotico","Alívio imediato da dor")
+                );
 
         return new ArrayList<>(List.of(
                 new EventoDoencaFerimento("Infecção", "infecção", 0.3, 15, "Ambiente.RioLago", "Infecção", List.of("Antibiótico")),
@@ -108,6 +120,9 @@ public class Jogo {
                     contadorTurnosNoAmbiente = 0;
                 }
                 turno++;
+                if (verificarVitoria(turno)) {
+                    break;
+                }
             }
 
         } catch (MorteException e) {
@@ -124,67 +139,7 @@ public class Jogo {
             }
         }
     }
-    /*
-    public void iniciar() {
-        informacoesInciais();
-        System.out.println("\nAMBIENTE: \n");
-        System.out.println(ambienteAtual);
 
-        int turno = 1;
-        while (true) {
-            System.out.println("\n\n===TURNO: " + turno + "===");
-            exibirStatusPersonagem();
-            System.out.println(ambienteAtual);
-
-
-            ambienteAtual.modificarClima();
-            desgasteNatural();
-
-            Evento eventoSorteado = gerenciador.sortearEvento(ambienteAtual);
-            if (eventoSorteado != null) {
-                System.out.println("\n[EVENTO] " + eventoSorteado.getDescricao());
-                eventoSorteado.executar(jogador, ambienteAtual);
-            } else {
-                System.out.println("\nNenhum evento ocorreu neste turno.");
-            }
-
-            executarAcoesDojogador();
-
-            jogador.aplicarEfeitoVeneno();
-            if (jogador.getVida() <= 0 || jogador.getFome() <= 0 || jogador.getSede() <= 0 || jogador.getEnergia() <= 0 || jogador.getSanidade() <= 0) {
-                System.out.println("\nVocê não resistiu... Fim de jogo.");
-                System.out.println("Você sobreviveu durante " + turno + " dias.");
-                break;
-            }
-
-            turno++;
-            contadorTurnosNoAmbiente++;
-            //if (contadorTurnosNoAmbiente >= 5) {
-                //mudarParaProximoAmbiente();
-            //    System.out.println("\nVocê avançou para um novo ambiente: " + ambienteAtual.getNome());
-            //    contadorTurnosNoAmbiente = 0;
-         //   }
-            if (contadorTurnosNoAmbiente >= 5) {
-                List<Ambiente> ambientes = gerenciadorDeAmbientes.getAmbientesDisponiveis();
-
-                int proximoIndice = (indiceAmbienteAtual + 1) % ambientes.size();
-                Ambiente novoAmbiente = ambientes.get(proximoIndice);
-                indiceAmbienteAtual = proximoIndice;
-
-                gerenciadorDeAmbientes.mudarAmbiente(jogador, novoAmbiente);
-                ambienteAtual = novoAmbiente;
-
-                contadorTurnosNoAmbiente = 0;
-            }
-        }
-        scanner.close();
-
-        System.out.println("Histórico de movimentações:");
-        for (Ambiente a : gerenciadorDeAmbientes.getHistoricoMovimentacao()) {
-            System.out.println("- " + a.getNome());
-        }
-    }
-     */
     private void verificarMorte() {
         if (jogador.getVida() <= 0) {
             throw new MorteException("Sua vida chegou a zero!", "Ferimentos graves");
@@ -216,6 +171,24 @@ public class Jogo {
             }
         }
         System.out.println("Você não tem alimentos no inventário!");
+    }
+
+    private void usarMedicamento() {
+        List<Item> itens = jogador.getInventario().getItens();
+        for (Item item : itens) {
+            if (item instanceof Remedios) {
+                item.usar();
+                ((Remedios) item).usar(jogador);
+                if (item.getDurabilidade() <= 0) {
+                    jogador.getInventario().removerItem(item);
+                    System.out.println(item.getNome() + " foi usado completamente e removido do inventário.");
+                }
+                System.out.println("\n\nINFORMAÇÕES DO PERSONAGEM APÓS APLICAR MEDICAMENTO\n");
+                System.out.println(jogador);
+                return;
+            }
+        }
+        System.out.println("Você não tem remedios no inventário!");
     }
 
     private void consumirAgua(){
@@ -258,7 +231,7 @@ public class Jogo {
         }
     }
     private void executarAcoesDoJogador(){
-        System.out.println("O que você deseja fazer? (1) Comer (2) Explorar  (3) Ação especial (4) Beber Água");
+        System.out.println("O que você deseja fazer? (1) Comer (2) Explorar  (3) Ação especial (4) Beber Água (5) Usar Medicamento");
         int escolha = scanner.nextInt();
         switch (escolha) {
             case 1:
@@ -272,6 +245,9 @@ public class Jogo {
                 break;
             case 4:
                 consumirAgua();
+                break;
+            case 5:
+                usarMedicamento();
                 break;
             default:
                 System.out.println("Opção inválida!");
@@ -302,29 +278,16 @@ public class Jogo {
         }
 
     }
-    /*
-    private void mudarParaProximoAmbiente() {
-        indiceAmbienteAtual = (indiceAmbienteAtual + 1) % ambientesDisponiveis.size();
-        ambienteAtual = ambientesDisponiveis.get(indiceAmbienteAtual);
-        System.out.println("\nVocê avançou para um novo ambiente: " + ambienteAtual.getNome());
-        System.out.println(ambienteAtual);
-    }
-    private void inicializarEventosAmbientes() {
-        for (Ambiente ambiente : ambientesDisponiveis) {
-            if (ambiente instanceof Floresta) {
-                ambiente.adicionarEvento(new EventoCriatura("Lobo", "lobo", 0.3, 15, "Floresta", "lobo", 3, List.of("Fugir", "Combater")));
-                ambiente.adicionarEvento(new EventoClimatico("Tempestade", "tempestade", 0.4, 10, "Floresta", "tempestade", 3));
-                // Adicione mais eventos da Floresta aqui
-            } else if (ambiente instanceof Caverna) {
-                ambiente.adicionarEvento(new EventoCriatura("Morcego", "morcego", 0.25, 8, "Caverna", "morcego", 2, List.of("Fugir", "Combater")));
-                // Eventos específicos da Caverna
-            } else if (ambiente instanceof Montanha) {
-                ambiente.adicionarEvento(new EventoClimatico("Nevasca", "nevasca", 0.3, 15, "Montanha", "nevasca", 4));
-                // Eventos da Montanha
-            }
-            // continuar para RioLago, RuinasAbandonadas etc.
+    private boolean verificarVitoria(int turno){
+        if (turno > 25) {
+            System.out.println("\n\n=== VITÓRIA ===");
+            System.out.println("Parabéns jogador, você sobreviveu por 25 dias sozinho!");
+            System.out.println("Um helicóptero sobrevoou a região e conseguiu localizá-lo.");
+            System.out.println("Você foi resgatado com sucesso!");
+            return true;
         }
+        return false;
+    }
 
-     */
     }
 

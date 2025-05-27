@@ -3,6 +3,7 @@ package Evento;
 import Personagem.Personagem;
 import Item.Item;
 import Item.Alimento;
+import Item.Agua;
 import Ambiente.Ambiente;
 import Exception.InventarioCheioException;
 
@@ -116,7 +117,7 @@ public class EventoDescoberta extends Evento {
                 jogador.aumentarSanidade(5);
 
                 List<Item> itensFonte = Arrays.asList(
-                        new Alimento("Água", 0.7, 2, 4, "agua", 8),
+                        new Agua("Agua", 0.7, 2, 4, true),
                         new Alimento("Fruta", 0.5, 1, 3, "fruta", 4)
                 );
 
