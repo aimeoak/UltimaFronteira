@@ -219,7 +219,7 @@ public class Jogo {
         System.out.println("2. Caverna");
         System.out.println("3. Montanha");
         System.out.println("4. Rio/Lago");
-        System.out.println("6. Ruínas abandonadas");
+        System.out.println("5. Ruínas abandonadas");
 
         int escolha = scanner.nextInt();
         scanner.nextLine();
