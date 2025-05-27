@@ -1,9 +1,9 @@
 package Evento;
-
+import Interfaces.EventoInterface;
 import Ambiente.Ambiente;
 import Personagem.Personagem;
 
-public class EventoClimatico extends Evento {
+public class EventoClimatico extends Evento implements EventoInterface{
     private String tipoClima;       //neve,tempestade,incendio...
     private int duracao;
     //adicionar atributo efeito no ambiente

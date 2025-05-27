@@ -1,8 +1,8 @@
 package Item;
-
+import Interfaces.ComportamentoDeItem;
 import Personagem.Personagem;
 
-public class Alimento extends Item {
+public class Alimento extends Item implements ComportamentoDeItem {
     private int valorNutricional; 
     private String tipoAlimento; //nossos tipos de alimentos serão carne, frutas, legumes, peixe, cogumelos (Carne = intoxicação alimentar, Cougumelo = restaura vida)
     private int validade; 

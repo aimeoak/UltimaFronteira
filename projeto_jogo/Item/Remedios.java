@@ -1,8 +1,8 @@
 package Item;
-
+import Interfaces.ComportamentoDeItem;
 import Personagem.Personagem;
 
-public class Remedios extends Item {
+public class Remedios extends Item implements ComportamentoDeItem{
     private String tipo; // Analgésico, antibiótico, bandagem
   private String efeito; 
 

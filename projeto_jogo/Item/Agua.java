@@ -1,8 +1,8 @@
 package Item;
-
+import Interfaces.ComportamentoDeItem;
 import Personagem.Personagem;
 
-public class Agua extends Item {
+public class Agua extends Item implements ComportamentoDeItem{
   private int volume; 
   private boolean potavel; // true = potável, false = contaminada;
 

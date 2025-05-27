@@ -71,33 +71,7 @@ public class Floresta extends Ambiente {
             }
         }
     }
-    /*
-    @Override
-    public void explorar(Personagem jogador) {
-        String[] recursos = getRecursos();
-        Random rand = new Random();
-        int index = rand.nextInt(recursos.length);
 
-        String recursoEncontrado = recursos[index];
-
-        System.out.println("Você encontrou " + recursoEncontrado);
-
-        Item itemEncontrado = criarItem(recursoEncontrado);
-
-        if (itemEncontrado != null) {
-            
-            if (recursoEncontrado.equals("Pedras preciosas e metais") || recursoEncontrado.equals("Água de degelo")) {
-                if (jogador.getInventario().adicionarItem(itemEncontrado)) {
-                    System.out.println(itemEncontrado.getNome() + " foi adicionado ao inventário.");
-                } else {
-                    System.out.println("Não foi possível adicionar " + itemEncontrado.getNome() + " ao inventário.");
-                }
-            } else {
-                System.out.println("Este item não pode ser adicionado ao inventário.");
-            }
-        }
-    }
-     */
 
     private Item criarItem(String recurso) {
         switch (recurso) {

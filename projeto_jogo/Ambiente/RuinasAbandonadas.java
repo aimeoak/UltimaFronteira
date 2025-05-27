@@ -20,7 +20,7 @@ public class RuinasAbandonadas extends Ambiente {
     private static final String clima = "Os abrigos oferecem boa proteção contra o clima";
 
   public RuinasAbandonadas(){
-    super("Ruinas Abandonadas", estruturas + ocupacao, 3, new String[] {"Municao", "Bandagem", "Alimentos enlatados", "Rato","Agua"}, 0.5, "Ensolarado, mas "+ clima);
+    super("Ambiente.RuinasAbandonadas", estruturas + ocupacao, 3, new String[] {"Municao", "Bandagem", "Alimentos enlatados", "Rato","Agua"}, 0.5, "Ensolarado, mas "+ clima);
   }
 
     @Override

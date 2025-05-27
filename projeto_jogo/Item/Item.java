@@ -1,6 +1,6 @@
 package Item;
-
-public class Item {
+import Interfaces.ComportamentoDeItem;
+public class Item implements ComportamentoDeItem {
     private String nome; 
     private double peso; 
     private int durabilidade; //cada "usar" diminui um inteiro de durabilidade até zerar, no caso de alimentos a durabilidade pode ser 1
@@ -18,6 +18,7 @@ public class Item {
         }
         return durabilidade;
     }
+
 
     public String getNome(){ 
         return this.nome;

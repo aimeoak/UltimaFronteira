@@ -1,6 +1,6 @@
 package Item;
-
-public class Ferramentas extends Item {
+import Interfaces.ComportamentoDeItem;
+public class Ferramentas extends Item implements ComportamentoDeItem{
     private String tipo; //Machado, faca, isqueiro, lanterna
     private int eficiencia; 
 

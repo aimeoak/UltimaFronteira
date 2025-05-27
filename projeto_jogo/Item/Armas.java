@@ -1,8 +1,8 @@
 package Item;
-
+import Interfaces.ComportamentoDeItem;
 import Personagem.Personagem;
 
-public class Armas extends Item {
+public class Armas extends Item implements ComportamentoDeItem {
     private String tipo; // corpo a corpo ou à distância
     private int dano;
     private int alcance; //distancia efetiva da arma

@@ -1,11 +1,11 @@
 package Evento;
 
 import Personagem.Personagem;
-
+import Interfaces.EventoInterface;
 import Ambiente.Ambiente;
 
 import java.util.List;
-public class EventoDoencaFerimento extends Evento {
+public class EventoDoencaFerimento extends Evento implements EventoInterface {
     private String tipoCondicao; //Infecção, febre, desidratação, fratura, etc
     private List<String> curaItens;
 

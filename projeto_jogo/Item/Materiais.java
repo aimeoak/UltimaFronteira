@@ -1,6 +1,6 @@
 package Item;
-
-public class Materiais extends Item {
+import Interfaces.ComportamentoDeItem;
+public class Materiais extends Item implements ComportamentoDeItem {
   private String tipo; 
   private int resistencia; 
 

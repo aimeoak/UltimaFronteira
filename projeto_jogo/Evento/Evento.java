@@ -1,9 +1,9 @@
 package Evento;
-
+import Interfaces.EventoInterface;
 import Ambiente.Ambiente;
 import Personagem.Personagem;
 
-public abstract class Evento {
+public abstract class Evento implements EventoInterface{
     private String nome;
     private String descricao;
     private double probabilidadeOcorrencia;
@@ -35,7 +35,9 @@ public abstract class Evento {
         this.condicaoAtivacao = condicaoAtivacao;
     }
 
-
+    /*
     public abstract void executar(Personagem jogador, Ambiente local);
     public abstract String getDescricao();
+
+     */
 }

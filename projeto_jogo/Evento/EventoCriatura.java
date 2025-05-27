@@ -1,5 +1,5 @@
 package Evento;
-
+import Interfaces.EventoInterface;
 import Ambiente.Ambiente;
 import Personagem.Personagem;
 import Item.Item;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class EventoCriatura extends Evento {
+public class EventoCriatura extends Evento implements EventoInterface{
 
 
     private String tipoCriatura; //Lobo,urso,corvo

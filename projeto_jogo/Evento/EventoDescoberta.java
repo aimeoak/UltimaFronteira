@@ -1,5 +1,5 @@
 package Evento;
-
+import Interfaces.EventoInterface;
 import Personagem.Personagem;
 import Item.Item;
 import Item.Alimento;
@@ -10,7 +10,7 @@ import Exception.InventarioCheioException;
 import java.util.List;
 import java.util.Arrays;
 import java.util.Random;
-public class EventoDescoberta extends Evento {
+public class EventoDescoberta extends Evento implements EventoInterface {
     private String tipoDescoberta; //Ambiente.Ambiente.Caverna, abrigo, suprimentos abandonados
     private List<Item> recursosEncontrados; //Comida, agua, ferramentas, armas
     private String condicaoEspecial;
@@ -22,79 +22,7 @@ public class EventoDescoberta extends Evento {
         this.condicaoEspecial = condicaoEspecial;
     }
 
-    /*@Override
-    public void executar(Personagem.Personagem jogador, Ambiente.Ambiente local) {
 
-        if (tipoDescoberta.equalsIgnoreCase("abrigo")) {
-            jogador.aumentarEnergia(5);
-            jogador.aumentarSanidade(5);
-
-        } else if (tipoDescoberta.equalsIgnoreCase("fonte")) {
-            jogador.aumentarSanidade(5);
-
-
-        } else if (tipoDescoberta.equalsIgnoreCase("ruinas")) {
-            jogador.aumentarSanidade(5);
-
-        } else {
-            System.out.println("Você não encontrou nada útil.");
-
-        }
-    }
-    @Override
-    public void executar(Personagem jogador, Ambiente local) {
-        Random random = new Random();
-        Item itemEncontrado = null;
-
-        switch (tipoDescoberta.toLowerCase()) {
-            case "abrigo":
-                jogador.aumentarEnergia(5);
-                jogador.aumentarSanidade(5);
-
-                List<Item> itensAbrigo = Arrays.asList(
-                        new Alimento("Carne seca", 1, 5, 10, "carne", 3),
-                        new Alimento("Sopa", 1, 3, 5, "enlatado", 10)
-                );
-
-                itemEncontrado = itensAbrigo.get(random.nextInt(itensAbrigo.size()));
-                break;
-
-            case "fonte":
-                jogador.aumentarSanidade(5);
-
-                List<Item> itensFonte = Arrays.asList(
-                        new Alimento("Água", 0.7, 2, 4, "agua", 8),
-                        new Alimento("Fruta", 0.5, 1, 3, "fruta", 4)
-                );
-
-                itemEncontrado = itensFonte.get(random.nextInt(itensFonte.size()));
-                break;
-
-            case "ruinas":
-                jogador.aumentarSanidade(5);
-
-                List<Item> itensRuinas = Arrays.asList(
-                        new Alimento("Cogumelo Antigo", 0.5, 2, 6, "cogumelo", 6),
-                        new Alimento("Carne enlatada", 1.5, 3, 7, "carne", 5)
-                );
-
-                itemEncontrado = itensRuinas.get(random.nextInt(itensRuinas.size()));
-                break;
-
-            default:
-                System.out.println("Você não encontrou nada útil.");
-                return;
-        }
-
-        if (itemEncontrado != null) {
-            System.out.println("Você encontrou: " + itemEncontrado.getNome());
-            boolean adicionado = jogador.getInventario().adicionarItem(itemEncontrado);
-            if (!adicionado) {
-                System.out.println("O item não pôde ser adicionado ao inventário (sem espaço).");
-            }
-        }
-    }
-    */
     @Override
     public void executar(Personagem jogador, Ambiente local) {
         Random random = new Random();
