@@ -1,3 +1,5 @@
+package LogicaJogo;
+
 import Ambiente.Ambiente;
 import Evento.Evento;
 import Personagem.Personagem;
@@ -8,15 +10,21 @@ import java.util.Random;
 public class GerenciadorDeAmbientes {
     private List<Ambiente> ambientesDisponiveis;
     private List<Ambiente> historicoMovimentacao;
+    private Ambiente ambienteAtual;
 
     public GerenciadorDeAmbientes(List<Ambiente> ambientesDisponiveis, List<Ambiente> historicoMovimentacao) {
         this.ambientesDisponiveis = ambientesDisponiveis;
         this.historicoMovimentacao = new ArrayList<>();
+        this.ambienteAtual = ambientesDisponiveis.get(0);
     }
 
     public void mudarAmbiente(Personagem jogador, Ambiente novoAmbiente) {
         historicoMovimentacao.add(novoAmbiente);
         System.out.println("Você se moveu para: " + novoAmbiente.getNome());
+        this. ambienteAtual = novoAmbiente;
+    }
+    public Ambiente getAmbienteAtual() {
+        return ambienteAtual;
     }
     private Random random = new Random();
 

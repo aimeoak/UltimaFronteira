@@ -1,3 +1,5 @@
+package LogicaJogo;
+
 import Ambiente.Floresta;
 import Ambiente.*;
 import Evento.*;
@@ -7,12 +9,13 @@ import Personagem.Personagem;
 import Personagem.Medico;
 import Personagem.Rastreador;
 import Personagem.Sobrevivente;
+import LogicaJogo.GerenciadorDeAmbientes;
 
 import java.util.*;
 
 public class Jogo {
     private Personagem jogador;
-    private Ambiente ambienteAtual;
+    //private Ambiente ambienteAtual;
     private GerenciadorDeEventos gerenciador;
     private Scanner scanner;
 
@@ -30,7 +33,7 @@ public class Jogo {
         List<Ambiente> ambientes = List.of(new Floresta(), new RioLago(), new Caverna(), new Montanha(), new RuinasAbandonadas());
         gerenciadorDeAmbientes = new GerenciadorDeAmbientes(ambientes, new ArrayList<>());
 
-        ambienteAtual = ambientes.get(0);
+
 
 
         jogador.getInventario().adicionarItem(new Alimento("Carne", 2.0, 1, 10, "Carne", 3));
@@ -86,21 +89,21 @@ public class Jogo {
         try {
             informacoesInciais();
             System.out.println("\nAMBIENTE: \n");
-            System.out.println(ambienteAtual);
+            System.out.println(gerenciadorDeAmbientes.getAmbienteAtual());
 
 
             while (true) {
                 System.out.println("\n\n=== TURNO: " + turno + " ===");
                 verificarMorte();
                 exibirStatusPersonagem();
-                System.out.println(ambienteAtual);
-                ambienteAtual.modificarClima();
+                System.out.println(gerenciadorDeAmbientes.getAmbienteAtual());
+                gerenciadorDeAmbientes.getAmbienteAtual().modificarClima();
                 desgasteNatural();
 
-                Evento eventoSorteado = gerenciador.sortearEvento(ambienteAtual);
+                Evento eventoSorteado = gerenciador.sortearEvento(gerenciadorDeAmbientes.getAmbienteAtual());
                 if (eventoSorteado != null) {
                     System.out.println("\n[EVENTO] " + eventoSorteado.getDescricao());
-                    eventoSorteado.executar(jogador, ambienteAtual);
+                    eventoSorteado.executar(jogador, gerenciadorDeAmbientes.getAmbienteAtual());
                 } else {
                     System.out.println("\nNenhum evento ocorreu neste turno.");
                 }
@@ -108,16 +111,17 @@ public class Jogo {
                 jogador.aplicarEfeitoVeneno();
                 contadorTurnosNoAmbiente++;
                 if (contadorTurnosNoAmbiente >= 5) {
-                    List<Ambiente> ambientes = gerenciadorDeAmbientes.getAmbientesDisponiveis();
+                    escolherAmbiente();
+                    //List<Ambiente> ambientes = gerenciadorDeAmbientes.getAmbientesDisponiveis();
 
-                    int proximoIndice = (indiceAmbienteAtual + 1) % ambientes.size();
-                    Ambiente novoAmbiente = ambientes.get(proximoIndice);
-                    indiceAmbienteAtual = proximoIndice;
+                   // int proximoIndice = (indiceAmbienteAtual + 1) % ambientes.size();
+                   // Ambiente novoAmbiente = ambientes.get(proximoIndice);
+                   // indiceAmbienteAtual = proximoIndice;
 
-                    gerenciadorDeAmbientes.mudarAmbiente(jogador, novoAmbiente);
-                    ambienteAtual = novoAmbiente;
+                   // gerenciadorDeAmbientes.mudarAmbiente(jogador, novoAmbiente);
+                   // ambienteAtual = novoAmbiente;
 
-                    contadorTurnosNoAmbiente = 0;
+                   contadorTurnosNoAmbiente = 0;
                 }
                 turno++;
                 if (verificarVitoria(turno)) {
@@ -208,6 +212,83 @@ public class Jogo {
         }
         System.out.println("Você não tem água no inventário!");
     }
+
+    private void escolherAmbiente(){
+        System.out.println("Escolha o próximo ambiente a ser explorado: ");
+        System.out.println("1. Floresta");
+        System.out.println("2. Caverna");
+        System.out.println("3. Montanha");
+        System.out.println("4. Rio/Lago");
+        System.out.println("6. Ruínas abandonadas");
+
+        int escolha = scanner.nextInt();
+        scanner.nextLine();
+
+        List<Ambiente> ambientes = List.of(
+                new Floresta(),
+                new Caverna(),
+                new Montanha(),
+                new RioLago(),
+                new RuinasAbandonadas()
+        );
+
+        Ambiente novoAmbiente = null;
+
+        switch(escolha){
+            case 1:
+                novoAmbiente = new Floresta();
+                break;
+            case 2:
+                novoAmbiente = new Caverna();
+                break;
+            case 3:
+                novoAmbiente = new Montanha();
+                break;
+            case 4:
+                novoAmbiente = new RioLago();
+                break;
+            case 5:
+                novoAmbiente = new RuinasAbandonadas();
+                break;
+            default:
+                System.out.println("Escolha inválida.");
+                return;
+        }
+
+        gerenciadorDeAmbientes.mudarAmbiente(jogador, novoAmbiente);
+        /*List<Ambiente> ambientes = new ArrayList<>();
+        ambientes.add(new Floresta());
+        ambientes.add(new Montanha());
+        ambientes.add(new RioLago());
+        ambientes.add(new Caverna());
+        ambientes.add(new RuinasAbandonadas());
+
+        List<Ambiente> historico = new ArrayList<>();
+
+        GerenciadorDeAmbientes gerenciador = new GerenciadorDeAmbientes(ambientes, historico);
+
+        switch(escolha){
+            case 1:
+                gerenciador.mudarAmbiente(jogador, new Floresta());
+                break;
+            case 2:
+                gerenciador.mudarAmbiente(jogador, new Caverna());
+                break;
+            case 3:
+                gerenciador.mudarAmbiente(jogador, new Montanha());
+                break;
+            case 4:
+                gerenciador.mudarAmbiente(jogador, new RioLago());
+                break;
+            case 5:
+                gerenciador.mudarAmbiente(jogador, new RuinasAbandonadas());
+                break;
+            default:
+                System.out.println("Escolha inválida.");
+                break;
+        }
+    */
+    }
     private Personagem escolherPersonagem(){
         System.out.println("Escolha seu personagem: ");
         System.out.println("1. Médico - habilidades de cura");
@@ -238,7 +319,7 @@ public class Jogo {
                 consumirAlimento();
                 break;
             case 2:
-                ambienteAtual.explorar(jogador);
+                gerenciadorDeAmbientes.getAmbienteAtual().explorar(jogador);
                 break;
             case 3:
                 jogador.acaoEspecial();

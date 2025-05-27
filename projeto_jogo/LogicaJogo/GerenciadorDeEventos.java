@@ -1,3 +1,5 @@
+package LogicaJogo;
+
 import Ambiente.Ambiente;
 import Evento.Evento;
 import Personagem.Personagem;
