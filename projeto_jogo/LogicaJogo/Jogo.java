@@ -23,7 +23,7 @@ public class Jogo {
 
     private int contadorTurnosNoAmbiente = 0;
     private int indiceAmbienteAtual = 0;
-
+    private int dificuldade = 1;
 
 
     public Jogo() {
@@ -34,30 +34,28 @@ public class Jogo {
         gerenciadorDeAmbientes = new GerenciadorDeAmbientes(ambientes, new ArrayList<>());
 
 
-
-
         jogador.getInventario().adicionarItem(new Alimento("Carne", 2.0, 1, 10, "Carne", 3));
         jogador.getInventario().adicionarItem(new Agua("Agua", 2.0, 1, 10, true));
-        gerenciador = new GerenciadorDeEventos(0.8,inicializarEventos());
+        gerenciador = new GerenciadorDeEventos(0.8, inicializarEventos());
 
     }
 
     private List<Evento> inicializarEventos() {
         List<Item> recursosAbrigo = List.of(
                 new Alimento("Carne Enlatada", 0.5, 5, 10, "Carne", 3),
-                new Remedios("Antibiotico",2,1,"Antibiotico","Alívio imediato da dor"),
-                new Remedios("Bandagem",0.5,2,"Bandagem","Estancamento de ferimentos")
+                new Remedios("Antibiotico", 2, 1, "Antibiotico", "Alívio imediato da dor"),
+                new Remedios("Bandagem", 0.5, 2, "Bandagem", "Estancamento de ferimentos")
         );
         List<Item> recursosRuinas = List.of(
                 new Alimento("Cogumelo Comestível", 0.2, 2, 8, "Cogumelo", 5),
-                new Remedios("Bandagem",0.5,3,"Bandagem","Estancamento de ferimentos"),
-                new Remedios("Analgesico",4,1,"Analgesico","Alívio imediato da dor")
+                new Remedios("Bandagem", 0.5, 3, "Bandagem", "Estancamento de ferimentos"),
+                new Remedios("Analgesico", 4, 1, "Analgesico", "Alívio imediato da dor")
         );
         List<Item> recursosFonte = List.of(
                 new Agua("Agua", 2, 2, 5, true),
-                new Remedios("Bandagem",0.5,3,"Bandagem","Estancamento de ferimentos"),
-                new Remedios("Antibiotico",2,1,"Antibiotico","Alívio imediato da dor")
-                );
+                new Remedios("Bandagem", 0.5, 3, "Bandagem", "Estancamento de ferimentos"),
+                new Remedios("Antibiotico", 2, 1, "Antibiotico", "Alívio imediato da dor")
+        );
 
         return new ArrayList<>(List.of(
                 new EventoDoencaFerimento("Infecção", "infecção", 0.3, 15, "Ambiente.RioLago", "Infecção", List.of("Antibiótico")),
@@ -84,6 +82,7 @@ public class Jogo {
                 new EventoDescoberta("Ruinas", "ruinas", 0.3, 0, "Ambiente.Caverna", "ruinas", recursosRuinas, ""),
                 new EventoDescoberta("Ruinas", "ruinas", 0.3, 0, "Ambiente.RuinasAbandonadas", "ruinas", recursosRuinas, "")));
     }
+
     public void iniciar() {
         int turno = 1;
         try {
@@ -94,6 +93,7 @@ public class Jogo {
 
             while (true) {
                 System.out.println("\n\n=== TURNO: " + turno + " ===");
+                atualizarDificuldade(turno);
                 verificarMorte();
                 exibirStatusPersonagem();
                 System.out.println(gerenciadorDeAmbientes.getAmbienteAtual());
@@ -112,16 +112,8 @@ public class Jogo {
                 contadorTurnosNoAmbiente++;
                 if (contadorTurnosNoAmbiente >= 5) {
                     escolherAmbiente();
-                    //List<Ambiente> ambientes = gerenciadorDeAmbientes.getAmbientesDisponiveis();
 
-                   // int proximoIndice = (indiceAmbienteAtual + 1) % ambientes.size();
-                   // Ambiente novoAmbiente = ambientes.get(proximoIndice);
-                   // indiceAmbienteAtual = proximoIndice;
-
-                   // gerenciadorDeAmbientes.mudarAmbiente(jogador, novoAmbiente);
-                   // ambienteAtual = novoAmbiente;
-
-                   contadorTurnosNoAmbiente = 0;
+                    contadorTurnosNoAmbiente = 0;
                 }
                 turno++;
                 if (verificarVitoria(turno)) {
@@ -133,7 +125,7 @@ public class Jogo {
             System.out.println("\n\n=== FIM DE JOGO ===");
             System.out.println("Motivo: " + e.getCausa());
             System.out.println(e.getMessage());
-            System.out.println("Sobreviveu por " + (turno-1) + " turnos");
+            System.out.println("Sobreviveu por " + (turno - 1) + " turnos");
 
         } finally {
             scanner.close();
@@ -195,7 +187,7 @@ public class Jogo {
         System.out.println("Você não tem remedios no inventário!");
     }
 
-    private void consumirAgua(){
+    private void consumirAgua() {
         List<Item> itens = jogador.getInventario().getItens();
         for (Item item : itens) {
             if (item instanceof Agua) {
@@ -213,7 +205,7 @@ public class Jogo {
         System.out.println("Você não tem água no inventário!");
     }
 
-    private void escolherAmbiente(){
+    private void escolherAmbiente() {
         System.out.println("Escolha o próximo ambiente a ser explorado: ");
         System.out.println("1. Floresta");
         System.out.println("2. Caverna");
@@ -234,7 +226,7 @@ public class Jogo {
 
         Ambiente novoAmbiente = null;
 
-        switch(escolha){
+        switch (escolha) {
             case 1:
                 novoAmbiente = new Floresta();
                 break;
@@ -256,40 +248,10 @@ public class Jogo {
         }
 
         gerenciadorDeAmbientes.mudarAmbiente(jogador, novoAmbiente);
-        /*List<Ambiente> ambientes = new ArrayList<>();
-        ambientes.add(new Floresta());
-        ambientes.add(new Montanha());
-        ambientes.add(new RioLago());
-        ambientes.add(new Caverna());
-        ambientes.add(new RuinasAbandonadas());
 
-        List<Ambiente> historico = new ArrayList<>();
-
-        GerenciadorDeAmbientes gerenciador = new GerenciadorDeAmbientes(ambientes, historico);
-
-        switch(escolha){
-            case 1:
-                gerenciador.mudarAmbiente(jogador, new Floresta());
-                break;
-            case 2:
-                gerenciador.mudarAmbiente(jogador, new Caverna());
-                break;
-            case 3:
-                gerenciador.mudarAmbiente(jogador, new Montanha());
-                break;
-            case 4:
-                gerenciador.mudarAmbiente(jogador, new RioLago());
-                break;
-            case 5:
-                gerenciador.mudarAmbiente(jogador, new RuinasAbandonadas());
-                break;
-            default:
-                System.out.println("Escolha inválida.");
-                break;
-        }
-    */
     }
-    private Personagem escolherPersonagem(){
+
+    private Personagem escolherPersonagem() {
         System.out.println("Escolha seu personagem: ");
         System.out.println("1. Médico - habilidades de cura");
         System.out.println("2. Rastreador - especialista em encontrar recursos");
@@ -299,7 +261,7 @@ public class Jogo {
         System.out.println("Digite o nome do seu personagem: ");
         String nome = scanner.nextLine();
 
-        switch (escolha){
+        switch (escolha) {
             case 1:
                 return new Medico(nome);
             case 2:
@@ -311,7 +273,8 @@ public class Jogo {
                 return new Medico(nome);
         }
     }
-    private void executarAcoesDoJogador(){
+
+    private void executarAcoesDoJogador() {
         System.out.println("O que você deseja fazer? (1) Comer (2) Explorar  (3) Ação especial (4) Beber Água (5) Usar Medicamento");
         int escolha = scanner.nextInt();
         switch (escolha) {
@@ -335,20 +298,25 @@ public class Jogo {
         }
 
     }
-    private void desgasteNatural(){
-        jogador.reduzirFome(5);
-        jogador.reduzirSede(5);
-        jogador.aumentarEnergia(3);
-        jogador.aumentarSanidade(2);
+
+    private void desgasteNatural() {
+        int reducao = 5 + dificuldade;
+        jogador.reduzirFome(reducao);
+        jogador.reduzirSede(reducao);
+        jogador.aumentarEnergia(5);
+        jogador.aumentarSanidade(5-dificuldade);
     }
-    private void exibirStatusPersonagem(){
+
+    private void exibirStatusPersonagem() {
         System.out.println("\n[STATUS DO PERSONAGEM]");
         System.out.println(jogador);
         System.out.println("\n[INVENTÁRIO]");
         jogador.getInventario().listarItens();
+        System.out.println();
     }
-    private void informacoesInciais(){
-        System.out.println("ÙLTIMA FRONTEIRA\n\nEstas são as informações do seu personagem: \n");
+
+    private void informacoesInciais() {
+        System.out.println("\nULTIMA FRONTEIRA\n\nEstas são as informações do seu personagem: \n");
         System.out.println(jogador);
         if (jogador instanceof Medico) {
             System.out.println("Você é um Médico: treinado para lidar com ferimentos e doenças, pode salvar a si mesmo e aos outros com seus conhecimentos de cura.");
@@ -359,7 +327,8 @@ public class Jogo {
         }
 
     }
-    private boolean verificarVitoria(int turno){
+
+    private boolean verificarVitoria(int turno) {
         if (turno > 25) {
             System.out.println("\n\n=== VITÓRIA ===");
             System.out.println("Parabéns jogador, você sobreviveu por 25 dias sozinho!");
@@ -370,5 +339,10 @@ public class Jogo {
         return false;
     }
 
+    private void atualizarDificuldade(int turno) {
+        this.dificuldade = 1 + turno / 5;
+        System.out.println("DIFICULDADE ATUAL: nível " + dificuldade);
+
     }
+}
 

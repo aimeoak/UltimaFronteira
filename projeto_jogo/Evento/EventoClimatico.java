@@ -17,18 +17,18 @@ public class EventoClimatico extends Evento implements EventoInterface{
     @Override
     public void executar(Personagem jogador, Ambiente local) {
         if (tipoClima.equalsIgnoreCase("neve")) {
-            jogador.reduzirVida(5);
-            jogador.reduzirEnergia(10);
+            jogador.reduzirVida(7);
+            jogador.reduzirEnergia(15);
             jogador.reduzirSanidade(5);
         } else if (tipoClima.equalsIgnoreCase("tempestade")) {
             jogador.reduzirVida(5);
-            jogador.reduzirEnergia(5);
-            jogador.reduzirSanidade(5);
+            jogador.reduzirEnergia(10);
+            jogador.reduzirSanidade(10);
         } else if (tipoClima.equalsIgnoreCase("incendio")) {
-            jogador.reduzirVida(10);
-            jogador.reduzirEnergia(7);
+            jogador.reduzirVida(15);
+            jogador.reduzirEnergia(10);
             jogador.reduzirSede(15);
-            jogador.reduzirSanidade(5);
+            jogador.reduzirSanidade(10);
 
         } else {
             System.out.println("O clima está instável, mas não afeta diretamente o personagem.");

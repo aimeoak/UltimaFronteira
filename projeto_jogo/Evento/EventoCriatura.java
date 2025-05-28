@@ -33,9 +33,9 @@ public class EventoCriatura extends Evento implements EventoInterface{
     public void executar(Personagem jogador, Ambiente local) {
         if (tipoCriatura.equalsIgnoreCase("lobo")) {
             // Lobo ataca o jogador
-            jogador.reduzirVida(10);
-            jogador.reduzirEnergia(3);
-            jogador.reduzirSanidade(5);
+            jogador.reduzirVida(15);
+            jogador.reduzirEnergia(7);
+            jogador.reduzirSanidade(10);
 
             // Tentativa do lobo de roubar um item do inventário
             Inventario inventario = jogador.getInventario();
@@ -54,12 +54,13 @@ public class EventoCriatura extends Evento implements EventoInterface{
                 System.out.println("O inventário está vazio, o lobo não conseguiu roubar nada.");
             }
         } else if (tipoCriatura.equalsIgnoreCase("cobra")) {
-            jogador.reduzirVida(3);
-            jogador.reduzirSanidade(5);
+            jogador.reduzirVida(7);
+            jogador.reduzirSanidade(10);
+            jogador.reduzirEnergia(10);
             jogador.envenenar();
         } else if (tipoCriatura.equalsIgnoreCase("corvo")) {
-            jogador.reduzirSanidade(10);
-            jogador.reduzirEnergia(5);
+            jogador.reduzirSanidade(15);
+            jogador.reduzirEnergia(10);
         } else {
             System.out.println("O dia está tranquilo, nenhum animal nocivo à vista.");
         }

@@ -18,15 +18,17 @@ public class EventoDoencaFerimento extends Evento implements EventoInterface {
     @Override
     public void executar(Personagem jogador, Ambiente local) {
         if (tipoCondicao.equalsIgnoreCase("fratura")) {
-            jogador.reduzirVida(10);
-
+            jogador.reduzirVida(15);
+            jogador.reduzirEnergia(10);
+            jogador.reduzirSanidade(5);
         } else if (tipoCondicao.equalsIgnoreCase("infecção")) {
-            jogador.reduzirVida(5);
-            jogador.reduzirEnergia(5);
+            jogador.reduzirVida(10);
+            jogador.reduzirEnergia(10);
             jogador.reduzirSanidade(5);
         } else if (tipoCondicao.equalsIgnoreCase("desidratação")) {
             jogador.reduzirSede(15);
-            jogador.reduzirSanidade(5);
+            jogador.reduzirEnergia(15);
+            jogador.reduzirSanidade(10);
 
         } else {
             System.out.println("Apesar dos perigos à espreita, seu corpo resiste. Por ora, você se sente forte e saudável.");

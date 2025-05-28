@@ -76,13 +76,13 @@ public class Inventario {
     }
 
     public void listarItens() {
-        System.out.println("Capacidade: " + pesoAtual + "/" + capacidadeMaxima);
+        System.out.println("Capacidade: " + String.format("%.1f",pesoAtual) + "/" + String.format("%.1f",capacidadeMaxima));
         if (itens.isEmpty()) {
             System.out.println("Inventário está vazio.");
         } else {
             System.out.println("Itens no inventário:");
             for (Item item : itens) {
-                System.out.println("- " + item.getNome() + " | Peso: " + item.getPeso() + " | Durabilidade: " + item.getDurabilidade());
+                System.out.println("- " + item.getNome() + " | Peso: " + String.format("%.1f",item.getPeso()) + " | Durabilidade: " + item.getDurabilidade());
             }
         }
     }
