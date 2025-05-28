@@ -152,7 +152,9 @@ public class Jogo {
     }
 
     private void consumirAlimento() {
-        List<Item> itens = jogador.getInventario().getItens();
+        //List<Item> itens = jogador.getInventario().getItens();
+        List<Item> itens = new ArrayList<>(jogador.getInventario().getItens());
+
         for (Item item : itens) {
             if (item instanceof Alimento) {
                 item.usar();
@@ -170,7 +172,8 @@ public class Jogo {
     }
 
     private void usarMedicamento() {
-        List<Item> itens = jogador.getInventario().getItens();
+        //List<Item> itens = jogador.getInventario().getItens();
+        List<Item> itens = new ArrayList<>(jogador.getInventario().getItens());
         for (Item item : itens) {
             if (item instanceof Remedios) {
                 item.usar();
@@ -188,7 +191,9 @@ public class Jogo {
     }
 
     private void consumirAgua() {
-        List<Item> itens = jogador.getInventario().getItens();
+        //List<Item> itens = jogador.getInventario().getItens();
+        List<Item> itens = new ArrayList<>(jogador.getInventario().getItens());
+
         for (Item item : itens) {
             if (item instanceof Agua) {
 

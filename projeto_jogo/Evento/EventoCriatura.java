@@ -39,7 +39,8 @@ public class EventoCriatura extends Evento implements EventoInterface{
 
             // Tentativa do lobo de roubar um item do inventário
             Inventario inventario = jogador.getInventario();
-            List<Item> itens = inventario.getItens();
+            //List<Item> itens = inventario.getItens();
+            List<Item> itens = new ArrayList<>(inventario.getItens());
 
             if (!itens.isEmpty()) {
                 // Procurando por um alimento para roubar

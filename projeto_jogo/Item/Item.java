@@ -1,5 +1,6 @@
 package Item;
 import Interfaces.ComportamentoDeItem;
+import java.util.Objects;
 import java.lang.Comparable;
 public class Item implements ComportamentoDeItem, Comparable<Item>  {
     private String nome; 
@@ -42,8 +43,27 @@ public class Item implements ComportamentoDeItem, Comparable<Item>  {
         return "Nome: " + this.nome+ "\nPeso: " + this.peso + "\nDurabilidade: " + this.durabilidade;
 
     }
+    /*
     @Override
     public int compareTo(Item outro){
         return Integer.compare(this.durabilidade,outro.durabilidade);
+    }
+     */
+    @Override
+    public int compareTo(Item outro) {
+        return this.nome.compareToIgnoreCase(outro.nome);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return nome.equalsIgnoreCase(item.nome);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nome.toLowerCase());
     }
 }
