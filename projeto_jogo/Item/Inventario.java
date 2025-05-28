@@ -1,10 +1,12 @@
 package Item;
-import Exception.InventarioCheioException;
-import Personagem.Personagem;
 
+
+import java.util.Collections;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import Exception.InventarioCheioException;
+import Personagem.Personagem;
 
 public class Inventario {
     private List<Item> itens;
@@ -28,6 +30,9 @@ public class Inventario {
 
         itens.add(item);
         pesoAtual = novoPeso;
+
+        Collections.sort(itens);
+
         System.out.println(item.getNome() + " adicionado com sucesso!");
     }
     public void removerItem(Item item) {
@@ -99,3 +104,4 @@ public class Inventario {
         return itens;
     }
 }
+

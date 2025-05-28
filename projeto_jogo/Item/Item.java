@@ -1,6 +1,7 @@
 package Item;
 import Interfaces.ComportamentoDeItem;
-public class Item implements ComportamentoDeItem {
+import java.lang.Comparable;
+public class Item implements ComportamentoDeItem, Comparable<Item>  {
     private String nome; 
     private double peso; 
     private int durabilidade; //cada "usar" diminui um inteiro de durabilidade até zerar, no caso de alimentos a durabilidade pode ser 1
@@ -40,5 +41,9 @@ public class Item implements ComportamentoDeItem {
     public String toString(){ 
         return "Nome: " + this.nome+ "\nPeso: " + this.peso + "\nDurabilidade: " + this.durabilidade;
 
+    }
+    @Override
+    public int compareTo(Item outro){
+        return Integer.compare(this.durabilidade,outro.durabilidade);
     }
 }
